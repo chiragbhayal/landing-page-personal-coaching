@@ -19,3 +19,25 @@ rather than copy wholesale.
 
 Serve the folder (e.g. `python3 -m http.server`) and open `Main.dc.html`;
 some browsers block the scripts over file://.
+
+## Backend configuration
+
+Set the contact-inquiry API URL in `.env`:
+
+```env
+BACKEND_URL=http://localhost/public/v1/contact-inquiry
+```
+
+After changing `.env`, regenerate the browser runtime configuration:
+
+```bash
+node generate-env-config.js
+```
+
+`Main.dc.html` reads the generated `env-config.js`; the browser never reads `.env` directly.
+
+## Vercel deployment
+
+The root URL is rewritten to `Main.dc.html` through `vercel.json`. Keep the Vercel
+Framework Preset set to **Other** and leave the Output Directory empty so Vercel
+serves the repository root.
