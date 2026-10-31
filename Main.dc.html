@@ -25,7 +25,9 @@
         /* ==========================================================================
            1. Core Reset & Responsive Base
            ========================================================================== */
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
           box-sizing: border-box;
         }
 
@@ -49,7 +51,9 @@
           width: 100%;
         }
 
-        img, svg, video {
+        img,
+        svg,
+        video {
           max-width: 100%;
           height: auto;
         }
@@ -64,10 +68,22 @@
         }
 
         .site-root {
-          --gomzi-accent: {{accent}};
+          --gomzi-accent: {
+              {
+              accent
+            }
+          }
+
+          ;
           background: #FFFFFF;
           color: #121411;
-          font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          font-family: Inter,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
           font-size: 16px;
           line-height: 1.6;
           overflow-x: hidden;
@@ -195,9 +211,11 @@
         .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) {
           transform: translateY(7px) rotate(45deg);
         }
+
         .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) {
           opacity: 0;
         }
+
         .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
           transform: translateY(-7px) rotate(-45deg);
         }
@@ -248,12 +266,15 @@
           .site-header__container {
             padding: 12px 16px;
           }
+
           .site-logo__img {
             height: 38px;
           }
+
           .desktop-nav {
             display: none;
           }
+
           .nav-toggle {
             display: flex;
           }
@@ -319,7 +340,13 @@
         }
 
         .hero-cta-btn--primary {
-          background: {{accent}};
+          background: {
+              {
+              accent
+            }
+          }
+
+          ;
           color: #121411;
           text-decoration: none;
           font-weight: 700;
@@ -332,7 +359,8 @@
           align-items: center;
           justify-content: center;
           gap: 8px;
-          transition: transform 160ms ease, box-shadow 160ms ease;
+          transition: transform 160ms ease,
+          box-shadow 160ms ease;
         }
 
         .hero-cta-btn--primary:hover {
@@ -432,17 +460,21 @@
             padding: 36px 16px 32px;
             gap: 36px;
           }
+
           .hero-content {
             flex: 1 1 100%;
           }
+
           .hero-media-wrap {
             flex: 1 1 100%;
             max-width: 440px;
             margin: 0 auto;
           }
+
           .hero-image-box {
             height: clamp(300px, 75vw, 420px);
           }
+
           .hero-badge--doctor {
             left: 8px;
             bottom: 12px;
@@ -450,6 +482,7 @@
             max-width: calc(100% - 16px);
             padding: 10px 14px;
           }
+
           .hero-badge--coach {
             right: 8px;
             top: 12px;
@@ -463,10 +496,12 @@
             flex-direction: column;
             width: 100%;
           }
+
           .hero-cta-btn--primary,
           .hero-cta-btn--secondary {
             width: 100%;
           }
+
           .hero-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -533,14 +568,17 @@
           .section-quiz {
             padding: 36px 16px;
           }
+
           .quiz-card-box {
             padding: 24px 18px;
             border-radius: 20px;
           }
+
           .quiz-grid {
             grid-template-columns: 1fr;
             gap: 10px;
           }
+
           .quiz-option-card {
             padding: 16px;
           }
@@ -580,7 +618,13 @@
         }
 
         .journey-card--special {
-          border: 2px solid {{accent}};
+          border: 2px solid {
+              {
+              accent
+            }
+          }
+
+          ;
         }
 
         .journey-card__image-wrap {
@@ -621,9 +665,11 @@
             padding: 36px 16px;
             gap: 24px;
           }
+
           .journey-card__image-wrap {
             height: clamp(170px, 46vw, 220px);
           }
+
           .journey-card__body {
             padding: 18px 16px;
           }
@@ -673,8 +719,21 @@
         }
 
         .prep-tag--accent {
-          border-color: {{accent}};
-          color: {{accent}};
+          border-color: {
+              {
+              accent
+            }
+          }
+
+          ;
+
+          color: {
+              {
+              accent
+            }
+          }
+
+          ;
         }
 
         .prep-slider {
@@ -750,7 +809,13 @@
 
         .prep-slider__nav:hover,
         .prep-slider__nav:focus-visible {
-          background: {{accent}};
+          background: {
+              {
+              accent
+            }
+          }
+
+          ;
           color: #121411;
           outline: none;
           transform: translateY(-50%) scale(1.05);
@@ -786,45 +851,61 @@
 
         .prep-slider__dot[aria-current="true"] {
           width: 24px;
-          background: {{accent}};
+
+          background: {
+              {
+              accent
+            }
+          }
+
+          ;
         }
 
         @media (max-width: 768px) {
           .section-prep {
             padding: 36px 16px;
           }
+
           .prep-container {
             padding: 28px 18px;
             border-radius: 20px;
             gap: 28px;
           }
+
           .prep-slider {
             flex: 1 1 100%;
             height: clamp(240px, 60vw, 360px);
             border-radius: 16px;
           }
+
           .prep-slider__nav {
             width: 38px;
             height: 38px;
           }
+
           .prep-slider__nav--prev {
             left: 8px;
           }
+
           .prep-slider__nav--next {
             right: 8px;
           }
+
           .prep-slider__caption {
             left: 14px;
             bottom: 14px;
             font-size: 12px;
           }
+
           .prep-slider__dots {
             right: 14px;
             bottom: 14px;
           }
+
           .prep-content {
             flex: 1 1 100%;
           }
+
           .prep-tag {
             padding: 5px 11px;
             font-size: 13px;
@@ -944,6 +1025,7 @@
             grid-template-columns: 1fr;
             gap: 20px;
           }
+
           .result-split__item {
             height: clamp(200px, 48vw, 270px);
           }
@@ -998,7 +1080,13 @@
         }
 
         .how-list__num--accent {
-          background: {{accent}};
+          background: {
+              {
+              accent
+            }
+          }
+
+          ;
           color: #121411;
         }
 
@@ -1018,9 +1106,11 @@
             padding: 36px 16px;
             gap: 32px;
           }
+
           .how-steps {
             flex: 1 1 100%;
           }
+
           .doctor-card {
             flex: 1 1 100%;
             padding: 22px 18px;
@@ -1085,7 +1175,8 @@
           background: #FFFFFF;
           color: #121411;
           padding: 0 14px;
-          font-size: 16px !important; /* Prevents auto-zoom on iOS */
+          font-size: 16px !important;
+          /* Prevents auto-zoom on iOS */
           font-family: inherit;
           width: 100%;
           box-sizing: border-box;
@@ -1236,14 +1327,17 @@
           .section-apply {
             padding: 36px 16px 56px;
           }
+
           .apply-container {
             padding: 28px 18px;
             border-radius: 20px;
             gap: 24px;
           }
+
           .apply-info {
             flex: 1 1 100%;
           }
+
           .apply-form {
             flex: 1 1 100%;
             padding: 20px 16px;
@@ -1303,9 +1397,11 @@
           .section-faq {
             padding: 20px 16px 48px;
           }
+
           .faq-item {
             padding: 14px 0;
           }
+
           .footer-container {
             padding: 24px 16px;
           }
@@ -1459,18 +1555,20 @@
         })();
       </script>
 
-      <!-- Counselling Form Controller -->
+      <!-- Counselling Form Controller (WhatsApp Forwarding + Dual-Dispatch CRM) -->
       <script>
         (() => {
           if (window.__gomziCounsellingFormBound) return;
           window.__gomziCounsellingFormBound = true;
+
+          const WHATSAPP_PHONE = '918866842520'; // Target WhatsApp: +91 88668 42520
 
           const initCounsellingForms = () => {
             document.querySelectorAll('[data-counselling-form]').forEach((form) => {
               if (form.getAttribute('data-ready') === 'true') return;
               form.setAttribute('data-ready', 'true');
 
-              form.addEventListener('submit', async (event) => {
+              form.addEventListener('submit', (event) => {
                 event.preventDefault();
 
                 const nameInput = form.querySelector('[name="name"]');
@@ -1480,7 +1578,7 @@
                 const status = form.querySelector('[data-counselling-status]');
                 const name = nameInput.value.trim();
                 const mobile = mobileInput.value.replace(/\D/g, '').slice(-10);
-                const goal = goalInput.value;
+                const goal = goalInput ? goalInput.value : 'Fat Loss (Level 1)';
 
                 const showStatus = (message, isError = false) => {
                   status.hidden = false;
@@ -1488,6 +1586,7 @@
                   status.style.color = isError ? '#B42318' : '#3F5A06';
                 };
 
+                // Form validation (Strict input hygiene)
                 if (!name) {
                   showStatus('Please enter your full name.', true);
                   nameInput.focus();
@@ -1495,64 +1594,83 @@
                 }
 
                 if (!/^[6-9]\d{9}$/.test(mobile)) {
-                  showStatus('Please enter a valid 10-digit mobile number.', true);
+                  showStatus('Please enter a valid 10-digit Mobile number.', true);
                   mobileInput.focus();
                   return;
                 }
 
-                const payload = {
-                  name,
-                  email: `lead-${mobile}@example.invalid`,
-                  mobile: `+91${mobile}`,
-                  message: `Counselling request for ${goal}`,
-                  subject: 'FWG Landing Page Counselling',
-                  source: 'fitnesswithgomzi',
-                  details: {
-                    goal,
-                    landingPage: window.location.href
-                  }
-                };
+                // 1. Format structured WhatsApp inquiry text
+                const messageText =
+                  `*New Counselling Inquiry - Gomzi Transformation*\n\n` +
+                  `👤 *Full Name:* ${name}\n` +
+                  `📱 *Mobile Number:* +91 ${mobile}\n` +
+                  `🎯 *Selected Goal:* ${goal}\n` +
+                  `🌐 *Source:* Gomzi Landing Page\n\n` +
+                  `Hello Dr. Gautam Jani & Team, I would like to book my counselling session. Please let me know the next steps.`;
 
-                const originalLabel = submitButton.textContent;
-                submitButton.disabled = true;
-                submitButton.textContent = 'Submitting…';
-                submitButton.style.opacity = '0.72';
-                status.hidden = true;
+                const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(messageText)}`;
 
+                // 2. Dual-Dispatch: Optimistic non-blocking CRM capture (keepalive: true)
                 try {
                   const endpointKey = form.getAttribute('data-endpoint-key');
                   const endpoint = window.__APP_ENV__?.[endpointKey];
-                  if (!endpoint) {
-                    throw new Error('Backend URL is not configured. Run: node generate-env-config.js');
-                  }
+                  if (endpoint) {
+                    const payload = {
+                      name,
+                      email: `lead-${mobile}@fitnesswithgomzi.com`,
+                      mobile: `+91${mobile}`,
+                      message: `Counselling request for ${goal}`,
+                      subject: 'FWG Landing Page Counselling',
+                      source: 'fitnesswithgomzi',
+                      details: {
+                        goal,
+                        landingPage: window.location.href,
+                        submittedAt: new Date().toISOString()
+                      }
+                    };
 
-                  const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                  });
-                  const responseText = await response.text();
-                  let responseData = null;
-                  try {
-                    responseData = responseText ? JSON.parse(responseText) : null;
-                  } catch {
-                    responseData = null;
+                    fetch(endpoint, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(payload),
+                      keepalive: true
+                    }).catch((err) => {
+                      console.warn('[Gomzi Counselling] Background CRM sync warning:', err);
+                    });
                   }
+                } catch (crmErr) {
+                  console.warn('[Gomzi Counselling] Background CRM exception:', crmErr);
+                }
 
-                  if (!response.ok) {
-                    throw new Error(responseData?.message || 'Unable to submit your request.');
+                // 3. UI feedback
+                showStatus('Connecting to WhatsApp (+91 88668 42520)… Please tap "Send" in the chat.');
+                const originalLabel = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.textContent = 'Opening WhatsApp…';
+
+                // 4. Synchronous window dispatch to bypass mobile/desktop popup blockers
+                let opened = false;
+                try {
+                  const waWin = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+                  if (waWin && !waWin.closed && typeof waWin.closed !== 'undefined') {
+                    opened = true;
                   }
+                } catch {
+                  opened = false;
+                }
 
-                  showStatus('Thank you! Your counselling request has been submitted.');
-                  nameInput.value = '';
-                  mobileInput.value = '';
-                } catch (error) {
-                  showStatus(error.message || 'Unable to connect to the server. Please try again.', true);
-                } finally {
+                // Fallback for popup-blocker or mobile webview
+                if (!opened) {
+                  window.location.href = whatsappUrl;
+                }
+
+                nameInput.value = '';
+                mobileInput.value = '';
+
+                setTimeout(() => {
                   submitButton.disabled = false;
                   submitButton.textContent = originalLabel;
-                  submitButton.style.opacity = '';
-                }
+                }, 2500);
               });
             });
           };
@@ -1640,7 +1758,8 @@
 
       <!-- TOP BAR -->
       <div class="top-bar">
-        Weight loss is only Level 1. <a href="#journey" style="color: {{accent}}; font-weight: 600">See where we take you next →</a>
+        Weight loss is only Level 1. <a href="#journey" style="color: {{accent}}; font-weight: 600">See where we take
+          you next →</a>
       </div>
 
       <!-- HEADER NAVIGATION -->
@@ -1649,7 +1768,7 @@
           <a href="#" class="site-logo">
             <img src="./images/gomzi-logo.png" alt="Gomzi Rapid Fitness Transformer" class="site-logo__img">
           </a>
-          
+
           <!-- Desktop Nav -->
           <nav class="desktop-nav" aria-label="Main Navigation">
             <a href="#journey" class="desktop-nav__link">Programs</a>
@@ -1660,7 +1779,8 @@
           </nav>
 
           <!-- Mobile Hamburger Toggle -->
-          <button type="button" class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" data-nav-toggle>
+          <button type="button" class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false"
+            data-nav-toggle>
             <span class="nav-toggle__bar"></span>
             <span class="nav-toggle__bar"></span>
             <span class="nav-toggle__bar"></span>
@@ -1688,7 +1808,8 @@
             Lose the Fat. Build the Muscle. <span style="color: #99c229">Step on Stage.</span>
           </h1>
           <p class="hero-desc">
-            Most coaches stop when you lose Weight. We keep going, from your first kilo lost to a next-level, stage-ready physique. One team, every single day.
+            Most coaches stop when you lose Weight. We keep going, from your first kilo lost to a next-level,
+            stage-ready physique. One team, every single day.
           </p>
           <div class="hero-cta-group">
             <a href="#apply" class="hero-cta-btn--primary">
@@ -1713,7 +1834,8 @@
           </div>
           <div class="hero-badge--doctor">
             <div style="font-size: 12px; font-weight: 700; color: #3F5A06">Doctor · 7:42 am</div>
-            <div style="font-size: 14px; color: #2A2E28">Blood reports look good. Keep water at 4 litres and sleep by 11.</div>
+            <div style="font-size: 14px; color: #2A2E28">Blood reports look good. Keep water at 4 litres and sleep by
+              11.</div>
           </div>
           <div class="hero-badge--coach">
             <div style="font-size: 12px; color: #C9CDC1">Coach · 5:30 pm</div>
@@ -1726,10 +1848,12 @@
       <section id="quiz" class="section-quiz">
         <div class="quiz-card-box">
           <div style="display: flex; flex-direction: column; gap: 6px">
-            <p style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
+            <p
+              style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
               10-second check
             </p>
-            <h2 style="margin: 0; font-weight: 800; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.2; letter-spacing: -0.02em">
+            <h2
+              style="margin: 0; font-weight: 800; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.2; letter-spacing: -0.02em">
               Which one sounds like you?
             </h2>
           </div>
@@ -1753,10 +1877,12 @@
       <!-- JOURNEY -->
       <section id="journey" class="section-journey">
         <div style="display: flex; flex-direction: column; gap: 8px; max-width: 640px">
-          <p style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
+          <p
+            style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
             The Gomzi path
           </p>
-          <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
+          <h2
+            style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
             Most People Stop at Weight Loss. Our Members Don’t.
           </h2>
           <p style="margin: 0; color: #4A5047">Hit your goal at one level, and the same team moves you to the next.</p>
@@ -1765,42 +1891,53 @@
         <div class="journey-grid">
           <article class="journey-card">
             <div class="journey-card__image-wrap">
-              <img src="./images/fat-loss-before-after.png" alt="Fat loss transformation before and after" class="journey-card__image">
+              <img src="./images/fat-loss-before-after.png" alt="Fat loss transformation before and after"
+                class="journey-card__image">
             </div>
             <div class="journey-card__body">
               <div style="font-size: 12px; font-weight: 700; color: #5B6157; letter-spacing: 0.08em">LEVEL 01</div>
               <h3 style="margin: 0; font-size: 20px; font-weight: 700">Fat Loss Transformation</h3>
-              <p style="margin: 0; color: #4A5047; font-size: 15px">No crash diets. Built on your regular home food, with gym or home workouts.</p>
-              <div style="margin-top: auto; padding-top: 12px; font-size: 14px; color: #5B6157">Next → <strong style="color: #121411">Muscle building</strong></div>
+              <p style="margin: 0; color: #4A5047; font-size: 15px">No crash diets. Built on your regular home food,
+                with gym or home workouts.</p>
+              <div style="margin-top: auto; padding-top: 12px; font-size: 14px; color: #5B6157">Next → <strong
+                  style="color: #121411">Muscle building</strong></div>
             </div>
           </article>
-          
+
           <article class="journey-card">
             <div class="journey-card__image-wrap">
-              <img src="./images/physique-building-before-after-v2.png" alt="Physique building transformation before and after" class="journey-card__image">
+              <img src="./images/physique-building-before-after-v2.png"
+                alt="Physique building transformation before and after" class="journey-card__image">
             </div>
             <div class="journey-card__body">
               <div style="font-size: 12px; font-weight: 700; color: #5B6157; letter-spacing: 0.08em">LEVEL 02</div>
               <h3 style="margin: 0; font-size: 20px; font-weight: 700">Muscle &amp; Physique Building</h3>
-              <p style="margin: 0; color: #4A5047; font-size: 15px">Add quality muscle, look athletic and keep the fat off for good.</p>
-              <div style="margin-top: auto; padding-top: 12px; font-size: 14px; color: #5B6157">Next → <strong style="color: #121411">Prep Coaching</strong></div>
+              <p style="margin: 0; color: #4A5047; font-size: 15px">Add quality muscle, look athletic and keep the fat
+                off for good.</p>
+              <div style="margin-top: auto; padding-top: 12px; font-size: 14px; color: #5B6157">Next → <strong
+                  style="color: #121411">Prep Coaching</strong></div>
             </div>
           </article>
-          
+
           <article class="journey-card journey-card--special">
             <div class="journey-card__image-wrap journey-card__image-wrap--special">
-              <img src="./images/physique-building-before-after.png" alt="Physique building transformation before and after" class="journey-card__image">
+              <img src="./images/physique-building-before-after.png"
+                alt="Physique building transformation before and after" class="journey-card__image">
             </div>
             <div class="journey-card__body">
               <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
                 <div style="font-size: 12px; font-weight: 700; color: #3F5A06; letter-spacing: 0.08em">LEVEL 03</div>
-                <div style="background: {{accent}}; color: #121411; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px">
+                <div
+                  style="background: {{accent}}; color: #121411; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px">
                   SPECIALITY
                 </div>
               </div>
               <h3 style="margin: 0; font-size: 20px; font-weight: 700">Prep Coaching</h3>
-              <p style="margin: 0; color: #4A5047; font-size: 15px">A next-level, conditioned physique, ready for stage or simply the best shape of your life.</p>
-              <a href="#apply" style="margin-top: auto; align-self: flex-start; color: #3F5A06; font-weight: 700; font-size: 14px">Find my starting level →</a>
+              <p style="margin: 0; color: #4A5047; font-size: 15px">A next-level, conditioned physique, ready for stage
+                or simply the best shape of your life.</p>
+              <a href="#apply"
+                style="margin-top: auto; align-self: flex-start; color: #3F5A06; font-weight: 700; font-size: 14px">Find
+                my starting level →</a>
             </div>
           </article>
         </div>
@@ -1809,7 +1946,8 @@
       <!-- DIRECT PREP -->
       <section id="prep" class="section-prep">
         <div class="prep-container">
-          <div class="prep-slider" data-prep-slider data-index="0" role="region" aria-label="Competition prep results carousel">
+          <div class="prep-slider" data-prep-slider data-index="0" role="region"
+            aria-label="Competition prep results carousel">
             <figure class="prep-slider__slide" data-prep-slide-item data-active="true" aria-hidden="false">
               <img class="prep-slider__image" src="./images/competition-lineup.png"
                 alt="Competition athletes and medal winners on stage">
@@ -1842,13 +1980,16 @@
             </div>
           </div>
           <div class="prep-content">
-            <p style="margin: 0; color: {{accent}}; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
+            <p
+              style="margin: 0; color: {{accent}}; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
               Already in shape?
             </p>
-            <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
+            <h2
+              style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
               Skip the line. Go straight to contest prep.
             </h2>
-            <p style="margin: 0; color: #C9CDC1">Bodybuilding, men’s physique and classic physique. First show or tenth, we plan every phase so you arrive conditioned, full and healthy.</p>
+            <p style="margin: 0; color: #C9CDC1">Bodybuilding, men’s physique and classic physique. First show or tenth,
+              we plan every phase so you arrive conditioned, full and healthy.</p>
             <div class="prep-tags">
               <span class="prep-tag">Off-Season</span>
               <span class="prep-tag">The Cut</span>
@@ -1856,7 +1997,8 @@
               <span class="prep-tag">Show Day</span>
               <span class="prep-tag prep-tag--accent">Doctor-Supervised</span>
             </div>
-            <a href="#apply" class="hero-cta-btn--primary" style="align-self: flex-start; margin-top: 8px">Apply for Prep Coaching</a>
+            <a href="#apply" class="hero-cta-btn--primary" style="align-self: flex-start; margin-top: 8px">Apply for
+              Prep Coaching</a>
           </div>
         </div>
       </section>
@@ -1865,10 +2007,12 @@
       <section id="results" class="section-results">
         <div class="results-header">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <p style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
+            <p
+              style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
               Real members
             </p>
-            <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
+            <h2
+              style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
               Don’t take our word. Look.
             </h2>
           </div>
@@ -1879,67 +2023,81 @@
           <figure class="result-figure">
             <div class="result-split">
               <div class="result-split__item result-split__item--before">
-                <img src="./images/weight-loss-before.png" alt="Weight loss transformation before" class="result-split__img">
+                <img src="./images/weight-loss-before.png" alt="Weight loss transformation before"
+                  class="result-split__img">
                 <span class="result-badge result-badge--before">BEFORE</span>
               </div>
               <div class="result-split__item result-split__item--after">
-                <img src="./images/weight-loss-after.png" alt="Weight loss transformation after" class="result-split__img">
+                <img src="./images/weight-loss-after.png" alt="Weight loss transformation after"
+                  class="result-split__img">
                 <span class="result-badge result-badge--after">AFTER</span>
               </div>
             </div>
-            <figcaption style="font-size: 14px"><strong>Weight Loss</strong> <span style="color: #5B6157">· 2.5 Months</span></figcaption>
+            <figcaption style="font-size: 14px"><strong>Weight Loss</strong> <span style="color: #5B6157">· 2.5
+                Months</span></figcaption>
           </figure>
 
           <figure class="result-figure">
             <div class="result-split">
               <div class="result-split__item result-split__item--before">
-                <img src="./images/physique-building-before.png" alt="Physique building transformation before" class="result-split__img">
+                <img src="./images/physique-building-before.png" alt="Physique building transformation before"
+                  class="result-split__img">
                 <span class="result-badge result-badge--before">BEFORE</span>
               </div>
               <div class="result-split__item result-split__item--after">
-                <img src="./images/physique-building-after.png" alt="Physique building transformation after" class="result-split__img">
+                <img src="./images/physique-building-after.png" alt="Physique building transformation after"
+                  class="result-split__img">
                 <span class="result-badge result-badge--after">AFTER</span>
               </div>
             </div>
-            <figcaption style="font-size: 14px"><strong>Physique Building</strong> <span style="color: #5B6157">· 9 Months</span></figcaption>
+            <figcaption style="font-size: 14px"><strong>Physique Building</strong> <span style="color: #5B6157">· 9
+                Months</span></figcaption>
           </figure>
 
           <figure class="result-figure">
             <div class="result-split">
               <div class="result-split__item result-split__item--before">
-                <img src="./images/fat-loss-to-stage-before.png" alt="Fat loss to stage transformation before" class="result-split__img">
+                <img src="./images/fat-loss-to-stage-before.png" alt="Fat loss to stage transformation before"
+                  class="result-split__img">
                 <span class="result-badge result-badge--before">BEFORE</span>
               </div>
               <div class="result-split__item result-split__item--after">
-                <img src="./images/fat-loss-after.png" alt="Fat loss to stage transformation after" class="result-split__img">
+                <img src="./images/fat-loss-after.png" alt="Fat loss to stage transformation after"
+                  class="result-split__img">
                 <span class="result-badge result-badge--after">AFTER</span>
               </div>
             </div>
-            <figcaption style="font-size: 14px"><strong>Fat Loss to Stage</strong> <span style="color: #5B6157">· Level 1 → 3</span></figcaption>
+            <figcaption style="font-size: 14px"><strong>Fat Loss to Stage</strong> <span style="color: #5B6157">· Level
+                1 → 3</span></figcaption>
           </figure>
 
           <figure class="result-figure">
             <div class="result-split">
               <div class="result-split__item result-split__item--before">
-                <img src="./images/competition-prep-before.png" alt="Competition prep transformation before" class="result-split__img">
+                <img src="./images/competition-prep-before.png" alt="Competition prep transformation before"
+                  class="result-split__img">
                 <span class="result-badge result-badge--before">BEFORE</span>
               </div>
               <div class="result-split__item result-split__item--after">
-                <img src="./images/competition-prep-after.png" alt="Competition prep transformation after" class="result-split__img">
+                <img src="./images/competition-prep-after.png" alt="Competition prep transformation after"
+                  class="result-split__img">
                 <span class="result-badge result-badge--after">AFTER</span>
               </div>
             </div>
-            <figcaption style="font-size: 14px"><strong>Competition Prep</strong> <span style="color: #5B6157">· 3 Months</span></figcaption>
+            <figcaption style="font-size: 14px"><strong>Competition Prep</strong> <span style="color: #5B6157">· 3
+                Months</span></figcaption>
           </figure>
         </div>
 
-        <p style="margin: 0; font-size: 12px; color: #5B6157">Shared with members’ permission. Results vary with starting point, consistency and health status.</p>
+        <p style="margin: 0; font-size: 12px; color: #5B6157">Shared with members’ permission. Results vary with
+          starting point, consistency and health status.</p>
       </section>
 
       <!-- HOW + DOCTOR -->
       <section class="section-how">
         <div class="how-steps">
-          <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; letter-spacing: -0.02em">
+          <h2
+            style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; letter-spacing: -0.02em">
             You’re never on your own after day one.
           </h2>
           <ol class="how-list">
@@ -1976,16 +2134,20 @@
 
         <div class="doctor-card">
           <div style="display: flex; gap: 16px; align-items: center">
-            <div style="flex: 0 0 80px; width: 80px; height: 80px; border-radius: 50%; background: #E4E7DE; overflow: hidden">
-              <img src="./images/dr-gautam-jani.png" alt="Dr. Gautam Jani" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center">
+            <div
+              style="flex: 0 0 80px; width: 80px; height: 80px; border-radius: 50%; background: #E4E7DE; overflow: hidden">
+              <img src="./images/dr-gautam-jani.png" alt="Dr. Gautam Jani"
+                style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center">
             </div>
             <div>
               <div style="font-weight: 800; font-size: 20px">Dr. Gautam Jani</div>
               <div style="color: #4A5047; font-size: 14px">PhD, Health &amp; Fitness · Founder, Gomzi</div>
             </div>
           </div>
-          <p style="margin: 0; color: #3A3F37; font-size: 15px">15+ years in fitness. His team of doctors, dietitians and coaches has guided 10,000+ people, and every program on this page runs directly under him.</p>
-          <blockquote style="margin: 0; padding-top: 16px; border-top: 1px solid #E4E7DE; font-size: 17px; font-weight: 600; line-height: 1.45">
+          <p style="margin: 0; color: #3A3F37; font-size: 15px">15+ years in fitness. His team of doctors, dietitians
+            and coaches has guided 10,000+ people, and every program on this page runs directly under him.</p>
+          <blockquote
+            style="margin: 0; padding-top: 16px; border-top: 1px solid #E4E7DE; font-size: 17px; font-weight: 600; line-height: 1.45">
             “Health is never traded for a number on the scale or a placing on stage.”
           </blockquote>
         </div>
@@ -1995,11 +2157,14 @@
       <section id="apply" class="section-apply">
         <div class="apply-container">
           <div class="apply-info">
-            <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.6vw, 42px); line-height: 1.12; letter-spacing: -0.02em">
+            <h2
+              style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.6vw, 42px); line-height: 1.12; letter-spacing: -0.02em">
               Six Months From Now, You’ll Wish You Started Today.
             </h2>
-            <p style="margin: 0; color: #3A3F37">Book a counselling call. We’ll tell you honestly which level to start at, online or offline in Surat.</p>
-            <a href="https://wa.me/918866842520" target="_blank" rel="noopener noreferrer" style="align-self: flex-start; margin-top: 6px; color: #121411; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; min-height: 44px">
+            <p style="margin: 0; color: #3A3F37">Book a counselling call. We’ll tell you honestly which level to start
+              at, online or offline in Surat.</p>
+            <a href="https://wa.me/918866842520" target="_blank" rel="noopener noreferrer"
+              style="align-self: flex-start; margin-top: 6px; color: #121411; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; min-height: 44px">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"></path>
@@ -2014,9 +2179,9 @@
               <input type="text" name="name" placeholder="Your name" autocomplete="name" required class="apply-input">
             </label>
             <label class="apply-field">
-              WhatsApp Number
-              <input type="tel" name="mobile" placeholder="10-digit mobile number" autocomplete="tel" inputmode="numeric"
-                minlength="10" maxlength="14" required class="apply-input">
+              Mobile Number
+              <input type="tel" name="mobile" placeholder="10-digit mobile number" autocomplete="tel"
+                inputmode="numeric" minlength="10" maxlength="14" required class="apply-input">
             </label>
             <div class="apply-field">
               <span>Your Goal</span>
@@ -2031,10 +2196,10 @@
                     <path d="m6 9 6 6 6-6"></path>
                   </svg>
                 </button>
-                <div id="goal-options" class="goal-dropdown__menu" data-goal-menu role="listbox"
-                  aria-label="Your goal" hidden>
-                  <button type="button" class="goal-dropdown__option" data-goal-option
-                    data-value="Fat Loss (Level 1)" role="option" aria-selected="true">
+                <div id="goal-options" class="goal-dropdown__menu" data-goal-menu role="listbox" aria-label="Your goal"
+                  hidden>
+                  <button type="button" class="goal-dropdown__option" data-goal-option data-value="Fat Loss (Level 1)"
+                    role="option" aria-selected="true">
                     <span>Fat Loss (Level 1)</span>
                     <svg class="goal-dropdown__check" width="17" height="17" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
@@ -2081,9 +2246,17 @@
                 </div>
               </div>
             </div>
-            <button type="submit" data-counselling-submit class="apply-submit-btn">Book my counselling call</button>
-            <p data-counselling-status role="status" aria-live="polite" hidden style="margin: 0; font-size: 13px; font-weight: 600; text-align: center"></p>
-            <p style="margin: 0; font-size: 12px; color: #5B6157; text-align: center">Takes about 3 minutes · Keep a front and back photo ready</p>
+            <button type="submit" data-counselling-submit class="apply-submit-btn">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 8px">
+                <path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"></path>
+              </svg>
+              Book counselling on WhatsApp
+            </button>
+            <p data-counselling-status role="status" aria-live="polite" hidden
+              style="margin: 0; font-size: 13px; font-weight: 600; text-align: center"></p>
+            <p style="margin: 0; font-size: 12px; color: #5B6157; text-align: center">Inquiry connects directly to
+              WhatsApp (+91 88668 42520) · Keep photos ready</p>
           </form>
         </div>
       </section>
@@ -2095,23 +2268,28 @@
         </h2>
         <details class="faq-item">
           <summary class="faq-summary">I’m overweight now. Can I still reach the stage one day?</summary>
-          <p class="faq-body">That’s what the three levels are for. Fat loss first, then muscle, then prep when your physique is ready.</p>
+          <p class="faq-body">That’s what the three levels are for. Fat loss first, then muscle, then prep when your
+            physique is ready.</p>
         </details>
         <details class="faq-item">
           <summary class="faq-summary">I’ve never competed. Can I do contest prep?</summary>
-          <p class="faq-body">Yes. On the counselling call we’ll tell you honestly which show and category make sense.</p>
+          <p class="faq-body">Yes. On the counselling call we’ll tell you honestly which show and category make sense.
+          </p>
         </details>
         <details class="faq-item">
           <summary class="faq-summary">Do I need to live in Surat?</summary>
-          <p class="faq-body">No. Most members are coached online. Offline training in Surat is there if you’re nearby.</p>
+          <p class="faq-body">No. Most members are coached online. Offline training in Surat is there if you’re nearby.
+          </p>
         </details>
         <details class="faq-item">
           <summary class="faq-summary">How is my health monitored?</summary>
-          <p class="faq-body">A doctor is in your group from day one and keeps checking your reports and health markers throughout.</p>
+          <p class="faq-body">A doctor is in your group from day one and keeps checking your reports and health markers
+            throughout.</p>
         </details>
         <details class="faq-item">
           <summary class="faq-summary">Do I need special food or supplements?</summary>
-          <p class="faq-body">No. Your diet is regular Indian home food. Supplements only if they fit your goal and budget.</p>
+          <p class="faq-body">No. Your diet is regular Indian home food. Supplements only if they fit your goal and
+            budget.</p>
         </details>
       </section>
 
@@ -2122,7 +2300,8 @@
             Fitness With Gomzi, Surat, Gujarat · WhatsApp +91 88668 42520
           </div>
           <p style="margin: 0; max-width: 820px; line-height: 1.5">
-            For general awareness only; not a substitute for consultation with a qualified medical professional. Any medical decision is made only by our doctor after assessing you individually. Results vary.
+            For general awareness only; not a substitute for consultation with a qualified medical professional. Any
+            medical decision is made only by our doctor after assessing you individually. Results vary.
           </p>
           <div>© Gomzi. All rights reserved.</div>
         </div>
