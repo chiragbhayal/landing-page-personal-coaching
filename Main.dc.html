@@ -8,6 +8,12 @@
   <meta name="format-detection" content="telephone=no">
   <title>Gomzi Transformation Program – Fat loss to stage</title>
   <link rel="icon" type="image/png" href="./images/gomzi-logo.png">
+  <script>
+    // Suppress support.js cross-origin fetch(location.href) when opened over file:// protocol
+    if (window.location.protocol === 'file:') {
+      window.__resources = window.__resources || {};
+    }
+  </script>
   <script src="./vendor/react.js"></script>
   <script src="./vendor/react-dom.js"></script>
   <script src="./env-config.js"></script>
@@ -100,6 +106,23 @@
           text-align: center;
           padding: 10px 16px;
           line-height: 1.4;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          box-sizing: border-box;
+          width: 100%;
+        }
+
+        .top-bar a {
+          color: var(--accent, #9BC028);
+          font-weight: 600;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+          transition: opacity 160ms ease;
+        }
+
+        .top-bar a:hover {
+          opacity: 0.85;
         }
 
         .site-header {
@@ -263,8 +286,14 @@
         }
 
         @media (max-width: 768px) {
+          .top-bar {
+            font-size: clamp(10px, 2.85vw, 12px);
+            padding: 8px 6px;
+            letter-spacing: -0.015em;
+          }
+
           .site-header__container {
-            padding: 12px 16px;
+            padding: 10px 16px;
           }
 
           .site-logo__img {
@@ -286,7 +315,7 @@
         .hero-section {
           max-width: 1160px;
           margin: 0 auto;
-          padding: 64px 24px 48px;
+          padding: 28px 24px 18px;
           display: flex;
           flex-wrap: wrap;
           gap: 48px;
@@ -426,7 +455,7 @@
         .hero-badge--doctor {
           position: absolute;
           left: -16px;
-          bottom: 28px;
+          bottom: 12px;
           width: 260px;
           background: rgba(255, 255, 255, 0.96);
           backdrop-filter: blur(8px);
@@ -457,8 +486,8 @@
 
         @media (max-width: 768px) {
           .hero-section {
-            padding: 36px 16px 32px;
-            gap: 36px;
+            padding: 12px 16px 8px;
+            gap: 28px;
           }
 
           .hero-content {
@@ -477,7 +506,7 @@
 
           .hero-badge--doctor {
             left: 8px;
-            bottom: 12px;
+            bottom: 4px;
             width: auto;
             max-width: calc(100% - 16px);
             padding: 10px 14px;
@@ -492,6 +521,10 @@
         }
 
         @media (max-width: 480px) {
+          .hero-section {
+            padding-top: 10px;
+          }
+
           .hero-cta-group {
             flex-direction: column;
             width: 100%;
@@ -517,7 +550,7 @@
         .section-quiz {
           max-width: 1160px;
           margin: 0 auto;
-          padding: 56px 24px;
+          padding: 18px 24px 48px;
         }
 
         .quiz-card-box {
@@ -566,7 +599,7 @@
 
         @media (max-width: 768px) {
           .section-quiz {
-            padding: 36px 16px;
+            padding: 10px 16px 32px;
           }
 
           .quiz-card-box {
@@ -1149,12 +1182,13 @@
           flex: 1 1 400px;
           min-width: 0;
           background: #FFFFFF;
-          border-radius: 20px;
-          padding: 28px;
+          border-radius: 24px;
+          padding: 32px 28px;
           display: flex;
           flex-direction: column;
-          gap: 14px;
-          box-shadow: 0 8px 28px rgba(18, 20, 17, 0.06);
+          gap: 16px;
+          box-shadow: 0 12px 36px rgba(18, 20, 17, 0.08);
+          border: 1px solid rgba(220, 224, 213, 0.7);
           box-sizing: border-box;
           width: 100%;
         }
@@ -1165,27 +1199,35 @@
           gap: 6px;
           font-size: 13px;
           font-weight: 600;
-          color: #3A3F37;
+          color: #2A2E28;
         }
 
         .apply-input {
-          min-height: 48px;
-          border-radius: 10px;
-          border: 1px solid #D6D9D0;
+          min-height: 50px;
+          border-radius: 12px;
+          border: 1.5px solid #DCE0D5;
           background: #FFFFFF;
           color: #121411;
-          padding: 0 14px;
+          padding: 0 16px;
           font-size: 16px !important;
           /* Prevents auto-zoom on iOS */
           font-family: inherit;
           width: 100%;
           box-sizing: border-box;
-          transition: border-color 160ms ease, box-shadow 160ms ease;
+          transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+        }
+
+        .apply-input::placeholder {
+          color: #8C9286;
+        }
+
+        .apply-input:hover {
+          border-color: #B8BFAD;
         }
 
         .apply-input:focus-visible {
-          border-color: #789817;
-          box-shadow: 0 0 0 3px rgba(155, 192, 40, 0.22);
+          border-color: #25D366;
+          box-shadow: 0 0 0 3.5px rgba(37, 211, 102, 0.18);
           outline: none;
         }
 
@@ -1196,14 +1238,14 @@
 
         .goal-dropdown__trigger {
           width: 100%;
-          min-height: 48px;
+          min-height: 50px;
           box-sizing: border-box;
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 12px;
-          border: 1px solid #D6D9D0;
-          border-radius: 10px;
+          border: 1.5px solid #DCE0D5;
+          border-radius: 12px;
           background: #FFFFFF;
           color: #121411;
           cursor: pointer;
@@ -1211,25 +1253,26 @@
           font-size: 15px;
           font-weight: 500;
           line-height: 1.3;
-          padding: 0 14px;
+          padding: 0 16px;
           text-align: left;
           transition: border-color 160ms ease, box-shadow 160ms ease;
         }
 
         .goal-dropdown__trigger:hover {
-          border-color: #AEB5A5;
+          border-color: #B8BFAD;
         }
 
         .goal-dropdown__trigger:focus-visible,
         .goal-dropdown__trigger[aria-expanded="true"] {
-          border-color: #789817;
-          box-shadow: 0 0 0 3px rgba(155, 192, 40, 0.22);
+          border-color: #25D366;
+          box-shadow: 0 0 0 3.5px rgba(37, 211, 102, 0.18);
           outline: none;
         }
 
         .goal-dropdown__chevron {
           flex: 0 0 auto;
           transition: transform 160ms ease;
+          color: #5B6157;
         }
 
         .goal-dropdown__trigger[aria-expanded="true"] .goal-dropdown__chevron {
@@ -1275,7 +1318,7 @@
           font-family: inherit;
           font-size: 14px;
           font-weight: 500;
-          padding: 9px 10px;
+          padding: 9px 12px;
           text-align: left;
         }
 
@@ -1302,25 +1345,57 @@
         }
 
         .apply-submit-btn {
-          min-height: 50px;
-          margin-top: 4px;
+          min-height: 52px;
+          margin-top: 6px;
           border: 0;
           border-radius: 999px;
-          background: #121411;
+          background: #25D366;
           color: #FFFFFF;
           font-weight: 700;
-          font-size: 16px;
+          font-size: clamp(14px, 3.8vw, 16px);
           font-family: inherit;
           cursor: pointer;
           width: 100%;
-          display: flex;
+          display: inline-flex;
           align-items: center;
           justify-content: center;
-          transition: background 160ms ease, transform 160ms ease;
+          gap: 10px;
+          padding: 0 20px;
+          box-sizing: border-box;
+          white-space: nowrap;
+          box-shadow: 0 8px 22px rgba(37, 211, 102, 0.32);
+          transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
         }
 
         .apply-submit-btn:hover {
-          background: #2A2E28;
+          background: #20BD5A;
+          transform: translateY(-1.5px);
+          box-shadow: 0 10px 26px rgba(37, 211, 102, 0.42);
+        }
+
+        .apply-submit-btn:active {
+          transform: translateY(0);
+          box-shadow: 0 4px 12px rgba(37, 211, 102, 0.28);
+        }
+
+        .apply-submit-btn:focus-visible {
+          outline: 3px solid rgba(37, 211, 102, 0.45);
+          outline-offset: 2px;
+        }
+
+        .apply-submit-btn .wa-btn-icon {
+          flex: 0 0 auto;
+          width: 22px;
+          height: 22px;
+          fill: currentColor;
+        }
+
+        .apply-helper-text {
+          margin: 0;
+          font-size: 12px;
+          color: #5B6157;
+          text-align: center;
+          line-height: 1.5;
         }
 
         @media (max-width: 768px) {
@@ -1340,8 +1415,8 @@
 
           .apply-form {
             flex: 1 1 100%;
-            padding: 20px 16px;
-            border-radius: 16px;
+            padding: 22px 18px;
+            border-radius: 18px;
           }
         }
 
@@ -1561,122 +1636,195 @@
           if (window.__gomziCounsellingFormBound) return;
           window.__gomziCounsellingFormBound = true;
 
-          const WHATSAPP_PHONE = '918866842520'; // Target WhatsApp: +91 88668 42520
+          const WHATSAPP_PHONE_PRIMARY = '918866842520';   // Primary Desk: +91 88668 42520
+          const WHATSAPP_PHONE_SECONDARY = '917874331000'; // Secondary Desk: +91 78743 31000
+          const WHATSAPP_PHONE_TERTIARY = '919691840096';  // Support Desk: +91 96918 40096
 
-          const initCounsellingForms = () => {
-            document.querySelectorAll('[data-counselling-form]').forEach((form) => {
-              if (form.getAttribute('data-ready') === 'true') return;
-              form.setAttribute('data-ready', 'true');
-
-              form.addEventListener('submit', (event) => {
-                event.preventDefault();
-
-                const nameInput = form.querySelector('[name="name"]');
-                const mobileInput = form.querySelector('[name="mobile"]');
-                const goalInput = form.querySelector('[name="goal"]');
-                const submitButton = form.querySelector('[data-counselling-submit]');
-                const status = form.querySelector('[data-counselling-status]');
-                const name = nameInput.value.trim();
-                const mobile = mobileInput.value.replace(/\D/g, '').slice(-10);
-                const goal = goalInput ? goalInput.value : 'Fat Loss (Level 1)';
-
-                const showStatus = (message, isError = false) => {
-                  status.hidden = false;
-                  status.textContent = message;
-                  status.style.color = isError ? '#B42318' : '#3F5A06';
-                };
-
-                // Form validation (Strict input hygiene)
-                if (!name) {
-                  showStatus('Please enter your full name.', true);
-                  nameInput.focus();
-                  return;
-                }
-
-                if (!/^[6-9]\d{9}$/.test(mobile)) {
-                  showStatus('Please enter a valid 10-digit Mobile number.', true);
-                  mobileInput.focus();
-                  return;
-                }
-
-                // 1. Format structured WhatsApp inquiry text
-                const messageText =
-                  `*New Counselling Inquiry - Gomzi Transformation*\n\n` +
-                  `👤 *Full Name:* ${name}\n` +
-                  `📱 *Mobile Number:* +91 ${mobile}\n` +
-                  `🎯 *Selected Goal:* ${goal}\n` +
-                  `🌐 *Source:* Gomzi Landing Page\n\n` +
-                  `Hello Dr. Gautam Jani & Team, I would like to book my counselling session. Please let me know the next steps.`;
-
-                const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(messageText)}`;
-
-                // 2. Dual-Dispatch: Optimistic non-blocking CRM capture (keepalive: true)
-                try {
-                  const endpointKey = form.getAttribute('data-endpoint-key');
-                  const endpoint = window.__APP_ENV__?.[endpointKey];
-                  if (endpoint) {
-                    const payload = {
-                      name,
-                      email: `lead-${mobile}@fitnesswithgomzi.com`,
-                      mobile: `+91${mobile}`,
-                      message: `Counselling request for ${goal}`,
-                      subject: 'FWG Landing Page Counselling',
-                      source: 'fitnesswithgomzi',
-                      details: {
-                        goal,
-                        landingPage: window.location.href,
-                        submittedAt: new Date().toISOString()
-                      }
-                    };
-
-                    fetch(endpoint, {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify(payload),
-                      keepalive: true
-                    }).catch((err) => {
-                      console.warn('[Gomzi Counselling] Background CRM sync warning:', err);
-                    });
+          // Pre-fill form from URL query parameters if page was reloaded with values
+          const prefillFromUrl = () => {
+            try {
+              const params = new URLSearchParams(window.location.search);
+              const name = params.get('name');
+              const mobile = params.get('mobile');
+              const goal = params.get('goal');
+              if (name || mobile || goal) {
+                document.querySelectorAll('[data-counselling-form]').forEach((form) => {
+                  if (name) {
+                    const nameInput = form.querySelector('[name="name"]');
+                    if (nameInput) nameInput.value = name;
                   }
-                } catch (crmErr) {
-                  console.warn('[Gomzi Counselling] Background CRM exception:', crmErr);
-                }
-
-                // 3. UI feedback
-                showStatus('Connecting to WhatsApp (+91 88668 42520)… Please tap "Send" in the chat.');
-                const originalLabel = submitButton.textContent;
-                submitButton.disabled = true;
-                submitButton.textContent = 'Opening WhatsApp…';
-
-                // 4. Synchronous window dispatch to bypass mobile/desktop popup blockers
-                let opened = false;
-                try {
-                  const waWin = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-                  if (waWin && !waWin.closed && typeof waWin.closed !== 'undefined') {
-                    opened = true;
+                  if (mobile) {
+                    const mobileInput = form.querySelector('[name="mobile"]');
+                    if (mobileInput) mobileInput.value = mobile;
                   }
-                } catch {
-                  opened = false;
+                  if (goal) {
+                    const goalInput = form.querySelector('[name="goal"]');
+                    if (goalInput) goalInput.value = goal;
+                    const goalValue = form.querySelector('[data-goal-value]');
+                    if (goalValue) goalValue.textContent = goal;
+                  }
+                });
+                // Clean URL query parameters so they don't linger in browser bar
+                if (window.history && window.history.replaceState) {
+                  const cleanUrl = window.location.pathname + window.location.hash;
+                  window.history.replaceState({}, document.title, cleanUrl);
                 }
-
-                // Fallback for popup-blocker or mobile webview
-                if (!opened) {
-                  window.location.href = whatsappUrl;
-                }
-
-                nameInput.value = '';
-                mobileInput.value = '';
-
-                setTimeout(() => {
-                  submitButton.disabled = false;
-                  submitButton.textContent = originalLabel;
-                }, 2500);
-              });
-            });
+              }
+            } catch (_) { }
           };
 
-          document.addEventListener('DOMContentLoaded', initCounsellingForms);
-          setTimeout(initCounsellingForms, 0);
+          // Global capturing submit listener: Immune to React unmount/remount lifecycles
+          document.addEventListener('submit', (event) => {
+            const form = event.target.closest('[data-counselling-form]');
+            if (!form) return;
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            const nameInput = form.querySelector('[name="name"]');
+            const mobileInput = form.querySelector('[name="mobile"]');
+            const goalInput = form.querySelector('[name="goal"]');
+            const submitButton = form.querySelector('[data-counselling-submit]');
+            const status = form.querySelector('[data-counselling-status]');
+            const name = nameInput ? nameInput.value.trim() : '';
+            const mobile = mobileInput ? mobileInput.value.replace(/\D/g, '').slice(-10) : '';
+            const goal = goalInput ? goalInput.value : 'Fat Loss (Level 1)';
+
+            const showStatus = (htmlOrText, isError = false) => {
+              if (!status) return;
+              status.hidden = false;
+              if (typeof htmlOrText === 'string' && htmlOrText.startsWith('<')) {
+                status.innerHTML = htmlOrText;
+              } else {
+                status.textContent = htmlOrText;
+              }
+              status.style.color = isError ? '#B42318' : '#233402';
+            };
+
+            // Form validation (Strict input hygiene)
+            if (!name) {
+              showStatus('Please enter your full name.', true);
+              if (nameInput) nameInput.focus();
+              return;
+            }
+
+            if (!/^[6-9]\d{9}$/.test(mobile)) {
+              showStatus('Please enter a valid 10-digit Mobile number.', true);
+              if (mobileInput) mobileInput.focus();
+              return;
+            }
+
+            // 1. Format structured WhatsApp inquiry text
+            const messageText =
+              `*New Counselling Inquiry - Gomzi Transformation*\n\n` +
+              `👤 *Full Name:* ${name}\n` +
+              `📱 *Mobile Number:* +91 ${mobile}\n` +
+              `🎯 *Selected Goal:* ${goal}\n` +
+              `🌐 *Source:* Gomzi Landing Page\n\n` +
+              `Hello Dr. Gautam Jani & Team, I would like to book my counselling session. Please let me know the next steps.`;
+
+            const encodedMessage = encodeURIComponent(messageText);
+            const primaryUrl = `https://wa.me/${WHATSAPP_PHONE_PRIMARY}?text=${encodedMessage}`;
+            const secondaryUrl = `https://wa.me/${WHATSAPP_PHONE_SECONDARY}?text=${encodedMessage}`;
+            const tertiaryUrl = `https://wa.me/${WHATSAPP_PHONE_TERTIARY}?text=${encodedMessage}`;
+
+            // 2. Dual/Multi-Dispatch: Optimistic non-blocking CRM capture (keepalive: true)
+            try {
+              const endpointKey = form.getAttribute('data-endpoint-key');
+              const endpoint = window.__APP_ENV__?.[endpointKey];
+              if (endpoint) {
+                const payload = {
+                  name,
+                  email: `lead-${mobile}@fitnesswithgomzi.com`,
+                  mobile: `+91${mobile}`,
+                  message: `Counselling request for ${goal}`,
+                  subject: 'FWG Landing Page Counselling',
+                  source: 'fitnesswithgomzi',
+                  recipients: [
+                    '+91' + WHATSAPP_PHONE_PRIMARY,
+                    '+91' + WHATSAPP_PHONE_SECONDARY,
+                    '+91' + WHATSAPP_PHONE_TERTIARY
+                  ],
+                  assignedTo: [
+                    '+91' + WHATSAPP_PHONE_PRIMARY,
+                    '+91' + WHATSAPP_PHONE_SECONDARY,
+                    '+91' + WHATSAPP_PHONE_TERTIARY
+                  ],
+                  details: {
+                    goal,
+                    landingPage: window.location.href,
+                    submittedAt: new Date().toISOString(),
+                    whatsappRecipients: [
+                      { desk: 'Primary Desk', number: '+91 88668 42520' },
+                      { desk: 'Secondary Desk', number: '+91 78743 31000' },
+                      { desk: 'Support Desk', number: '+91 96918 40096' }
+                    ]
+                  }
+                };
+
+                fetch(endpoint, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(payload),
+                  keepalive: true
+                }).catch((err) => {
+                  console.warn('[Gomzi Counselling] Background CRM sync warning:', err);
+                });
+              }
+            } catch (crmErr) {
+              console.warn('[Gomzi Counselling] Background CRM exception:', crmErr);
+            }
+
+            // 3. UI feedback
+            showStatus('Connecting to WhatsApp (+91 88668 42520)… Please tap "Send" in the chat.');
+
+            const btnText = form.querySelector('[data-counselling-btn-text]');
+            const originalLabel = btnText ? btnText.textContent : 'Book counselling on WhatsApp';
+            if (submitButton) submitButton.disabled = true;
+            if (btnText) {
+              btnText.textContent = 'Connecting WhatsApp…';
+            } else if (submitButton) {
+              submitButton.textContent = 'Connecting WhatsApp…';
+            }
+
+            // 4. Synchronous window dispatch: Attempt to trigger direct dispatch to all 3 numbers immediately
+            let primaryOpened = false;
+            try {
+              const wa1 = window.open(primaryUrl, '_blank', 'noopener,noreferrer');
+              if (wa1 && !wa1.closed && typeof wa1.closed !== 'undefined') {
+                primaryOpened = true;
+              }
+            } catch (_) {}
+
+            try {
+              window.open(secondaryUrl, '_blank', 'noopener,noreferrer');
+            } catch (_) {}
+
+            try {
+              window.open(tertiaryUrl, '_blank', 'noopener,noreferrer');
+            } catch (_) {}
+
+            // Fallback for popup-blocker or mobile webview
+            if (!primaryOpened) {
+              window.location.href = primaryUrl;
+            }
+
+            if (nameInput) nameInput.value = '';
+            if (mobileInput) mobileInput.value = '';
+
+            setTimeout(() => {
+              if (submitButton) submitButton.disabled = false;
+              if (btnText) {
+                btnText.textContent = originalLabel;
+              } else if (submitButton) {
+                submitButton.textContent = originalLabel;
+              }
+            }, 2500);
+          }, true); // useCapture = true ensures interception before any child bubble or default action
+
+          document.addEventListener('DOMContentLoaded', prefillFromUrl);
+          setTimeout(prefillFromUrl, 50);
+          setTimeout(prefillFromUrl, 500);
         })();
       </script>
 
@@ -2173,7 +2321,8 @@
             </a>
           </div>
 
-          <form data-counselling-form data-endpoint-key="BACKEND_URL" class="apply-form">
+          <form data-counselling-form data-endpoint-key="BACKEND_URL" class="apply-form" action="javascript:void(0);"
+            method="POST" onsubmit="event.preventDefault();">
             <label class="apply-field">
               Full Name
               <input type="text" name="name" placeholder="Your name" autocomplete="name" required class="apply-input">
@@ -2247,16 +2396,16 @@
               </div>
             </div>
             <button type="submit" data-counselling-submit class="apply-submit-btn">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 8px">
-                <path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"></path>
+              <svg class="wa-btn-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
+                aria-hidden="true">
+                <path
+                  d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.16C10.57 20.16 9.12 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.8 7.37 7.5 3.67 12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.05 20.16ZM16.57 14.46C16.32 14.33 15.1 13.73 14.87 13.65C14.65 13.56 14.48 13.52 14.32 13.77C14.15 14.02 13.67 14.58 13.53 14.75C13.38 14.92 13.23 14.94 12.99 14.81C12.74 14.69 11.94 14.43 10.99 13.58C10.25 12.92 9.75 12.11 9.6 11.86C9.46 11.61 9.59 11.48 9.71 11.36C9.82 11.25 9.96 11.07 10.08 10.93C10.21 10.79 10.25 10.68 10.33 10.52C10.41 10.35 10.37 10.21 10.31 10.08C10.25 9.96 9.75 8.74 9.55 8.24C9.35 7.76 9.15 7.82 8.99 7.81C8.85 7.8 8.68 7.8 8.52 7.8C8.35 7.8 8.08 7.86 7.85 8.11C7.62 8.36 6.98 8.96 6.98 10.18C6.98 11.4 7.87 12.57 8 12.74C8.12 12.91 9.75 15.42 12.24 16.49C12.83 16.75 13.29 16.9 13.65 17.02C14.24 17.21 14.78 17.18 15.21 17.12C15.69 17.05 16.69 16.51 16.9 15.93C17.11 15.35 17.11 14.85 17.05 14.75C16.99 14.65 16.82 14.58 16.57 14.46Z" />
               </svg>
-              Book counselling on WhatsApp
+              <span data-counselling-btn-text>Book counselling on WhatsApp</span>
             </button>
             <p data-counselling-status role="status" aria-live="polite" hidden
               style="margin: 0; font-size: 13px; font-weight: 600; text-align: center"></p>
-            <p style="margin: 0; font-size: 12px; color: #5B6157; text-align: center">Inquiry connects directly to
-              WhatsApp (+91 88668 42520) · Keep photos ready</p>
+            <p class="apply-helper-text">Inquiry connects directly to WhatsApp (+91 88668 42520) · Keep photos ready</p>
           </form>
         </div>
       </section>
