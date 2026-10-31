@@ -3,6 +3,9 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#121411">
+  <meta name="format-detection" content="telephone=no">
   <title>Gomzi Transformation Program – Fat loss to stage</title>
   <link rel="icon" type="image/png" href="./images/gomzi-logo.png">
   <script src="./vendor/react.js"></script>
@@ -14,130 +17,664 @@
 <body>
   <x-dc>
     <helmet>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
       <style>
+        /* ==========================================================================
+           1. Core Reset & Responsive Base
+           ========================================================================== */
+        *, *::before, *::after {
+          box-sizing: border-box;
+        }
+
+        html {
+          -webkit-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+          scroll-behavior: smooth;
+          scroll-padding-top: 76px;
+          overflow-x: hidden;
+        }
+
         body {
           margin: 0;
-          background: #FFFFFF
+          padding: 0;
+          background: #FFFFFF;
+          color: #121411;
+          font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
+          overflow-x: hidden;
+          width: 100%;
+        }
+
+        img, svg, video {
+          max-width: 100%;
+          height: auto;
         }
 
         a {
-          color: #3F5A06
+          color: #3F5A06;
+          transition: color 150ms ease;
         }
 
         a:hover {
-          color: #2C4004
+          color: #2C4004;
         }
 
-        .goal-dropdown {
+        .site-root {
+          --gomzi-accent: {{accent}};
+          background: #FFFFFF;
+          color: #121411;
+          font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
+          overflow-x: hidden;
+          width: 100%;
+        }
+
+        /* ==========================================================================
+           2. Top Bar & Header Navigation
+           ========================================================================== */
+        .top-bar {
+          background: #121411;
+          color: #FFFFFF;
+          font-size: 13px;
+          text-align: center;
+          padding: 10px 16px;
+          line-height: 1.4;
+        }
+
+        .site-header {
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          background: rgba(255, 255, 255, 0.96);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border-bottom: 1px solid #ECEEE8;
+        }
+
+        .site-header__container {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 14px 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          position: relative;
+        }
+
+        .site-logo {
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+        }
+
+        .site-logo__img {
+          height: 46px;
+          width: auto;
+          max-width: 100%;
+          display: block;
+          object-fit: contain;
+        }
+
+        /* Desktop Nav */
+        .desktop-nav {
+          display: flex;
+          align-items: center;
+          gap: 22px;
+          font-size: 14px;
+        }
+
+        .desktop-nav__link {
+          color: #3A3F37;
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 150ms ease;
+        }
+
+        .desktop-nav__link:hover {
+          color: #121411;
+        }
+
+        .nav-cta-btn {
+          background: #121411;
+          color: #FFFFFF !important;
+          text-decoration: none;
+          font-weight: 600;
+          padding: 10px 20px;
+          border-radius: 999px;
+          min-height: 42px;
+          box-sizing: border-box;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 160ms ease, transform 160ms ease;
+        }
+
+        .nav-cta-btn:hover {
+          background: #2A2E28;
+          transform: translateY(-1px);
+        }
+
+        /* Mobile Hamburger Button */
+        .nav-toggle {
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          width: 44px;
+          height: 44px;
+          padding: 0;
+          border: 1px solid #E4E7DE;
+          border-radius: 10px;
+          background: #FFFFFF;
+          cursor: pointer;
+          transition: background 150ms ease, border-color 150ms ease;
+        }
+
+        .nav-toggle:hover,
+        .nav-toggle:focus-visible {
+          background: #F4F5F1;
+          border-color: #D6D9D0;
+          outline: none;
+        }
+
+        .nav-toggle__bar {
+          width: 20px;
+          height: 2px;
+          background-color: #121411;
+          border-radius: 2px;
+          transition: transform 220ms ease, opacity 220ms ease;
+        }
+
+        .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) {
+          transform: translateY(7px) rotate(45deg);
+        }
+        .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) {
+          opacity: 0;
+        }
+        .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
+          transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Mobile Nav Dropdown Drawer */
+        .mobile-nav {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #FFFFFF;
+          border-bottom: 1px solid #ECEEE8;
+          box-shadow: 0 16px 36px rgba(18, 20, 17, 0.12);
+          padding: 16px 20px 22px;
+          flex-direction: column;
+          gap: 10px;
+          z-index: 99;
+        }
+
+        .mobile-nav.is-open {
+          display: flex;
+        }
+
+        .mobile-nav__link {
+          color: #2A2E28;
+          text-decoration: none;
+          font-size: 16px;
+          font-weight: 500;
+          padding: 10px 4px;
+          border-bottom: 1px solid #F4F5F1;
+          transition: color 150ms ease, padding-left 150ms ease;
+        }
+
+        .mobile-nav__link:hover {
+          color: #3F5A06;
+          padding-left: 4px;
+        }
+
+        .mobile-nav .nav-cta-btn {
+          width: 100%;
+          min-height: 48px;
+          font-size: 16px;
+          margin-top: 6px;
+        }
+
+        @media (max-width: 768px) {
+          .site-header__container {
+            padding: 12px 16px;
+          }
+          .site-logo__img {
+            height: 38px;
+          }
+          .desktop-nav {
+            display: none;
+          }
+          .nav-toggle {
+            display: flex;
+          }
+        }
+
+        /* ==========================================================================
+           3. Hero Section
+           ========================================================================== */
+        .hero-section {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 64px 24px 48px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 48px;
+          align-items: center;
+        }
+
+        .hero-content {
+          flex: 1 1 460px;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .hero-pill {
+          align-self: flex-start;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: #F3F7E6;
+          color: #3F5A06;
+          border-radius: 999px;
+          padding: 6px 14px;
+          font-size: 13px;
+          font-weight: 600;
+          line-height: 1.3;
+        }
+
+        .hero-title {
+          margin: 0;
+          font-weight: 800;
+          font-size: clamp(28px, 5.2vw, 54px);
+          line-height: 1.08;
+          letter-spacing: -0.03em;
+          word-break: break-word;
+        }
+
+        .hero-desc {
+          margin: 0;
+          font-size: clamp(16px, 2vw, 18px);
+          color: #4A5047;
+          max-width: 520px;
+          line-height: 1.55;
+        }
+
+        .hero-cta-group {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          align-items: center;
+        }
+
+        .hero-cta-btn--primary {
+          background: {{accent}};
+          color: #121411;
+          text-decoration: none;
+          font-weight: 700;
+          font-size: 16px;
+          padding: 14px 24px;
+          border-radius: 999px;
+          min-height: 48px;
+          box-sizing: border-box;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          transition: transform 160ms ease, box-shadow 160ms ease;
+        }
+
+        .hero-cta-btn--primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(155, 192, 40, 0.35);
+        }
+
+        .hero-cta-btn--secondary {
+          border: 1px solid #D6D9D0;
+          color: #121411;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 16px;
+          padding: 14px 22px;
+          border-radius: 999px;
+          min-height: 48px;
+          box-sizing: border-box;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 160ms ease, border-color 160ms ease;
+        }
+
+        .hero-cta-btn--secondary:hover {
+          background: #F7F8F4;
+          border-color: #AEB5A5;
+        }
+
+        .hero-stats {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+          padding-top: 8px;
+          font-size: 14px;
+          color: #5B6157;
+        }
+
+        .hero-media-wrap {
+          flex: 1 1 420px;
+          min-width: 0;
           position: relative;
           width: 100%;
         }
 
-        .goal-dropdown__trigger {
-          width: 100%;
-          min-height: 48px;
-          box-sizing: border-box;
+        .hero-image-box {
+          height: 480px;
+          border-radius: 24px;
+          background: transparent;
+          overflow: visible;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          border: 1px solid #D6D9D0;
-          border-radius: 12px;
-          background: #FFFFFF;
-          color: #121411;
-          cursor: pointer;
-          font-family: inherit;
-          font-size: 15px;
-          font-weight: 500;
-          line-height: 1.3;
-          padding: 0 14px;
-          text-align: left;
-          transition: border-color 160ms ease, box-shadow 160ms ease;
+          justify-content: center;
         }
 
-        .goal-dropdown__trigger:hover {
-          border-color: #AEB5A5;
+        .hero-image {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          object-position: center;
         }
 
-        .goal-dropdown__trigger:focus-visible,
-        .goal-dropdown__trigger[aria-expanded="true"] {
-          border-color: #789817;
-          box-shadow: 0 0 0 3px rgba(155, 192, 40, 0.22);
-          outline: none;
-        }
-
-        .goal-dropdown__chevron {
-          flex: 0 0 auto;
-          transition: transform 160ms ease;
-        }
-
-        .goal-dropdown__trigger[aria-expanded="true"] .goal-dropdown__chevron {
-          transform: rotate(180deg);
-        }
-
-        .goal-dropdown__menu {
+        .hero-badge--doctor {
           position: absolute;
-          z-index: 30;
-          top: calc(100% + 8px);
-          left: 0;
-          right: 0;
-          box-sizing: border-box;
+          left: -16px;
+          bottom: 28px;
+          width: 260px;
+          background: rgba(255, 255, 255, 0.96);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid #ECEEE8;
+          border-radius: 16px;
+          padding: 14px 16px;
+          box-shadow: 0 12px 32px rgba(18, 20, 17, 0.12);
           display: flex;
           flex-direction: column;
           gap: 4px;
-          margin: 0;
-          padding: 6px;
-          border: 1px solid #E1E4DB;
+          z-index: 2;
+        }
+
+        .hero-badge--coach {
+          position: absolute;
+          right: -10px;
+          top: 28px;
+          background: rgba(18, 20, 17, 0.94);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          color: #FFFFFF;
           border-radius: 14px;
-          background: #FFFFFF;
-          box-shadow: 0 18px 44px rgba(18, 20, 17, 0.16);
+          padding: 12px 16px;
+          box-shadow: 0 12px 32px rgba(18, 20, 17, 0.2);
+          z-index: 2;
         }
 
-        .goal-dropdown__menu[hidden] {
-          display: none;
+        @media (max-width: 768px) {
+          .hero-section {
+            padding: 36px 16px 32px;
+            gap: 36px;
+          }
+          .hero-content {
+            flex: 1 1 100%;
+          }
+          .hero-media-wrap {
+            flex: 1 1 100%;
+            max-width: 440px;
+            margin: 0 auto;
+          }
+          .hero-image-box {
+            height: clamp(300px, 75vw, 420px);
+          }
+          .hero-badge--doctor {
+            left: 8px;
+            bottom: 12px;
+            width: auto;
+            max-width: calc(100% - 16px);
+            padding: 10px 14px;
+          }
+          .hero-badge--coach {
+            right: 8px;
+            top: 12px;
+            max-width: calc(100% - 16px);
+            padding: 10px 14px;
+          }
         }
 
-        .goal-dropdown__option {
-          min-height: 42px;
+        @media (max-width: 480px) {
+          .hero-cta-group {
+            flex-direction: column;
+            width: 100%;
+          }
+          .hero-cta-btn--primary,
+          .hero-cta-btn--secondary {
+            width: 100%;
+          }
+          .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            text-align: center;
+            font-size: 13px;
+          }
+        }
+
+        /* ==========================================================================
+           4. Quiz Hook Section
+           ========================================================================== */
+        .section-quiz {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 56px 24px;
+        }
+
+        .quiz-card-box {
+          background: #F7F8F4;
+          border-radius: 24px;
+          padding: 40px 32px;
           display: flex;
-          align-items: center;
-          justify-content: space-between;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .quiz-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
           gap: 12px;
-          border: 0;
-          border-radius: 9px;
-          background: transparent;
-          color: #2A2E28;
-          cursor: pointer;
-          font-family: inherit;
+        }
+
+        .quiz-option-card {
+          background: #FFFFFF;
+          border: 1px solid #E4E7DE;
+          border-radius: 16px;
+          padding: 20px;
+          text-decoration: none;
+          color: #121411;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+        }
+
+        .quiz-option-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(18, 20, 17, 0.06);
+          border-color: #CBD0C3;
+        }
+
+        .quiz-option-card--dark {
+          background: #121411;
+          border-color: #121411;
+          color: #FFFFFF;
+        }
+
+        .quiz-option-card--dark:hover {
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+          .section-quiz {
+            padding: 36px 16px;
+          }
+          .quiz-card-box {
+            padding: 24px 18px;
+            border-radius: 20px;
+          }
+          .quiz-grid {
+            grid-template-columns: 1fr;
+            gap: 10px;
+          }
+          .quiz-option-card {
+            padding: 16px;
+          }
+        }
+
+        /* ==========================================================================
+           5. Journey Section
+           ========================================================================== */
+        .section-journey {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 56px 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+        }
+
+        .journey-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+
+        .journey-card {
+          border: 1px solid #ECEEE8;
+          border-radius: 20px;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          background: #FFFFFF;
+          transition: transform 160ms ease, box-shadow 160ms ease;
+        }
+
+        .journey-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 30px rgba(18, 20, 17, 0.06);
+        }
+
+        .journey-card--special {
+          border: 2px solid {{accent}};
+        }
+
+        .journey-card__image-wrap {
+          height: 200px;
+          background: #F4F5F1;
+          overflow: hidden;
+        }
+
+        .journey-card__image-wrap--special {
+          background: #F3F7E6;
+        }
+
+        .journey-card__image {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+
+        .journey-card__body {
+          padding: 22px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          flex: 1 1 auto;
+        }
+
+        @media (max-width: 880px) {
+          .journey-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .section-journey {
+            padding: 36px 16px;
+            gap: 24px;
+          }
+          .journey-card__image-wrap {
+            height: clamp(170px, 46vw, 220px);
+          }
+          .journey-card__body {
+            padding: 18px 16px;
+          }
+        }
+
+        /* ==========================================================================
+           6. Direct Prep Section & Slider
+           ========================================================================== */
+        .section-prep {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 56px 24px;
+        }
+
+        .prep-container {
+          background: #121411;
+          color: #FFFFFF;
+          border-radius: 28px;
+          padding: 48px 36px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 40px;
+          align-items: center;
+        }
+
+        .prep-content {
+          flex: 1 1 420px;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .prep-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .prep-tag {
+          border: 1px solid #3A3F37;
+          border-radius: 999px;
+          padding: 7px 14px;
           font-size: 14px;
-          font-weight: 500;
-          padding: 9px 10px;
-          text-align: left;
+          display: inline-flex;
+          align-items: center;
         }
 
-        .goal-dropdown__option:hover,
-        .goal-dropdown__option:focus-visible {
-          background: #F4F7EB;
-          color: #233402;
-          outline: none;
-        }
-
-        .goal-dropdown__option[aria-selected="true"] {
-          background: #EDF4D9;
-          color: #304704;
-          font-weight: 700;
-        }
-
-        .goal-dropdown__check {
-          flex: 0 0 auto;
-          opacity: 0;
-        }
-
-        .goal-dropdown__option[aria-selected="true"] .goal-dropdown__check {
-          opacity: 1;
+        .prep-tag--accent {
+          border-color: {{accent}};
+          color: {{accent}};
         }
 
         .prep-slider {
@@ -213,7 +750,7 @@
 
         .prep-slider__nav:hover,
         .prep-slider__nav:focus-visible {
-          background: #9BC028;
+          background: {{accent}};
           color: #121411;
           outline: none;
           transform: translateY(-50%) scale(1.05);
@@ -249,9 +786,592 @@
 
         .prep-slider__dot[aria-current="true"] {
           width: 24px;
-          background: #9BC028;
+          background: {{accent}};
+        }
+
+        @media (max-width: 768px) {
+          .section-prep {
+            padding: 36px 16px;
+          }
+          .prep-container {
+            padding: 28px 18px;
+            border-radius: 20px;
+            gap: 28px;
+          }
+          .prep-slider {
+            flex: 1 1 100%;
+            height: clamp(240px, 60vw, 360px);
+            border-radius: 16px;
+          }
+          .prep-slider__nav {
+            width: 38px;
+            height: 38px;
+          }
+          .prep-slider__nav--prev {
+            left: 8px;
+          }
+          .prep-slider__nav--next {
+            right: 8px;
+          }
+          .prep-slider__caption {
+            left: 14px;
+            bottom: 14px;
+            font-size: 12px;
+          }
+          .prep-slider__dots {
+            right: 14px;
+            bottom: 14px;
+          }
+          .prep-content {
+            flex: 1 1 100%;
+          }
+          .prep-tag {
+            padding: 5px 11px;
+            font-size: 13px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .prep-content .hero-cta-btn--primary {
+            width: 100%;
+          }
+        }
+
+        /* ==========================================================================
+           7. Results Section
+           ========================================================================== */
+        .section-results {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 56px 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+        }
+
+        .results-header {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: flex-end;
+          gap: 16px;
+        }
+
+        .results-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+        }
+
+        .result-figure {
+          margin: 0;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .result-split {
+          display: flex;
+          gap: 4px;
+          width: 100%;
+        }
+
+        .result-split__item {
+          position: relative;
+          flex: 1 1 0;
+          height: 260px;
+          background: #F4F5F1;
+          overflow: hidden;
+        }
+
+        .result-split__item--before {
+          border-radius: 14px 0 0 14px;
+        }
+
+        .result-split__item--after {
+          border-radius: 0 14px 14px 0;
+          background: #EEF3DF;
+        }
+
+        .result-split__img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+        }
+
+        .result-badge {
+          position: absolute;
+          padding: 5px 8px;
+          border-radius: 6px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+        }
+
+        .result-badge--before {
+          left: 10px;
+          bottom: 10px;
+          background: rgba(18, 20, 17, 0.78);
+          color: #FFFFFF;
+        }
+
+        .result-badge--after {
+          right: 10px;
+          bottom: 10px;
+          background: rgba(63, 90, 6, 0.88);
+          color: #FFFFFF;
+        }
+
+        @media (max-width: 960px) {
+          .results-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .section-results {
+            padding: 36px 16px;
+            gap: 20px;
+          }
+        }
+
+        @media (max-width: 540px) {
+          .results-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+          }
+          .result-split__item {
+            height: clamp(200px, 48vw, 270px);
+          }
+        }
+
+        /* ==========================================================================
+           8. How It Works & Doctor Section
+           ========================================================================== */
+        .section-how {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 56px 24px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 48px;
+        }
+
+        .how-steps {
+          flex: 1 1 460px;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .how-list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .how-list__item {
+          display: flex;
+          gap: 14px;
+          align-items: flex-start;
+        }
+
+        .how-list__num {
+          flex: 0 0 32px;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: #F1F3EC;
+          font-weight: 700;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .how-list__num--accent {
+          background: {{accent}};
+          color: #121411;
+        }
+
+        .doctor-card {
+          flex: 1 1 400px;
+          min-width: 0;
+          background: #F7F8F4;
+          border-radius: 24px;
+          padding: 28px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+          .section-how {
+            padding: 36px 16px;
+            gap: 32px;
+          }
+          .how-steps {
+            flex: 1 1 100%;
+          }
+          .doctor-card {
+            flex: 1 1 100%;
+            padding: 22px 18px;
+            border-radius: 20px;
+          }
+        }
+
+        /* ==========================================================================
+           9. Apply Section & Goal Dropdown
+           ========================================================================== */
+        .section-apply {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 56px 24px 72px;
+        }
+
+        .apply-container {
+          background: #F3F7E6;
+          border-radius: 28px;
+          padding: 48px 36px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 40px;
+          align-items: flex-start;
+        }
+
+        .apply-info {
+          flex: 1 1 360px;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .apply-form {
+          flex: 1 1 400px;
+          min-width: 0;
+          background: #FFFFFF;
+          border-radius: 20px;
+          padding: 28px;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          box-shadow: 0 8px 28px rgba(18, 20, 17, 0.06);
+          box-sizing: border-box;
+          width: 100%;
+        }
+
+        .apply-field {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          font-size: 13px;
+          font-weight: 600;
+          color: #3A3F37;
+        }
+
+        .apply-input {
+          min-height: 48px;
+          border-radius: 10px;
+          border: 1px solid #D6D9D0;
+          background: #FFFFFF;
+          color: #121411;
+          padding: 0 14px;
+          font-size: 16px !important; /* Prevents auto-zoom on iOS */
+          font-family: inherit;
+          width: 100%;
+          box-sizing: border-box;
+          transition: border-color 160ms ease, box-shadow 160ms ease;
+        }
+
+        .apply-input:focus-visible {
+          border-color: #789817;
+          box-shadow: 0 0 0 3px rgba(155, 192, 40, 0.22);
+          outline: none;
+        }
+
+        .goal-dropdown {
+          position: relative;
+          width: 100%;
+        }
+
+        .goal-dropdown__trigger {
+          width: 100%;
+          min-height: 48px;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          border: 1px solid #D6D9D0;
+          border-radius: 10px;
+          background: #FFFFFF;
+          color: #121411;
+          cursor: pointer;
+          font-family: inherit;
+          font-size: 15px;
+          font-weight: 500;
+          line-height: 1.3;
+          padding: 0 14px;
+          text-align: left;
+          transition: border-color 160ms ease, box-shadow 160ms ease;
+        }
+
+        .goal-dropdown__trigger:hover {
+          border-color: #AEB5A5;
+        }
+
+        .goal-dropdown__trigger:focus-visible,
+        .goal-dropdown__trigger[aria-expanded="true"] {
+          border-color: #789817;
+          box-shadow: 0 0 0 3px rgba(155, 192, 40, 0.22);
+          outline: none;
+        }
+
+        .goal-dropdown__chevron {
+          flex: 0 0 auto;
+          transition: transform 160ms ease;
+        }
+
+        .goal-dropdown__trigger[aria-expanded="true"] .goal-dropdown__chevron {
+          transform: rotate(180deg);
+        }
+
+        .goal-dropdown__menu {
+          position: absolute;
+          z-index: 30;
+          top: calc(100% + 8px);
+          left: 0;
+          right: 0;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          margin: 0;
+          padding: 6px;
+          border: 1px solid #E1E4DB;
+          border-radius: 14px;
+          background: #FFFFFF;
+          box-shadow: 0 18px 44px rgba(18, 20, 17, 0.16);
+          max-height: 260px;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .goal-dropdown__menu[hidden] {
+          display: none;
+        }
+
+        .goal-dropdown__option {
+          min-height: 42px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          border: 0;
+          border-radius: 9px;
+          background: transparent;
+          color: #2A2E28;
+          cursor: pointer;
+          font-family: inherit;
+          font-size: 14px;
+          font-weight: 500;
+          padding: 9px 10px;
+          text-align: left;
+        }
+
+        .goal-dropdown__option:hover,
+        .goal-dropdown__option:focus-visible {
+          background: #F4F7EB;
+          color: #233402;
+          outline: none;
+        }
+
+        .goal-dropdown__option[aria-selected="true"] {
+          background: #EDF4D9;
+          color: #304704;
+          font-weight: 700;
+        }
+
+        .goal-dropdown__check {
+          flex: 0 0 auto;
+          opacity: 0;
+        }
+
+        .goal-dropdown__option[aria-selected="true"] .goal-dropdown__check {
+          opacity: 1;
+        }
+
+        .apply-submit-btn {
+          min-height: 50px;
+          margin-top: 4px;
+          border: 0;
+          border-radius: 999px;
+          background: #121411;
+          color: #FFFFFF;
+          font-weight: 700;
+          font-size: 16px;
+          font-family: inherit;
+          cursor: pointer;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 160ms ease, transform 160ms ease;
+        }
+
+        .apply-submit-btn:hover {
+          background: #2A2E28;
+        }
+
+        @media (max-width: 768px) {
+          .section-apply {
+            padding: 36px 16px 56px;
+          }
+          .apply-container {
+            padding: 28px 18px;
+            border-radius: 20px;
+            gap: 24px;
+          }
+          .apply-info {
+            flex: 1 1 100%;
+          }
+          .apply-form {
+            flex: 1 1 100%;
+            padding: 20px 16px;
+            border-radius: 16px;
+          }
+        }
+
+        /* ==========================================================================
+           10. FAQ Section & Footer
+           ========================================================================== */
+        .section-faq {
+          max-width: 760px;
+          margin: 0 auto;
+          padding: 24px 24px 72px;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .faq-item {
+          border-bottom: 1px solid #ECEEE8;
+          padding: 16px 0;
+        }
+
+        .faq-summary {
+          font-weight: 600;
+          cursor: pointer;
+          min-height: 44px;
+          display: flex;
+          align-items: center;
+          user-select: none;
+          font-size: 16px;
+        }
+
+        .faq-body {
+          margin: 10px 0 0;
+          color: #4A5047;
+          font-size: 15px;
+          line-height: 1.5;
+        }
+
+        .site-footer {
+          border-top: 1px solid #ECEEE8;
+        }
+
+        .footer-container {
+          max-width: 1160px;
+          margin: 0 auto;
+          padding: 28px 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          font-size: 12px;
+          color: #5B6157;
+        }
+
+        @media (max-width: 768px) {
+          .section-faq {
+            padding: 20px 16px 48px;
+          }
+          .faq-item {
+            padding: 14px 0;
+          }
+          .footer-container {
+            padding: 24px 16px;
+          }
         }
       </style>
+
+      <!-- Mobile Navigation Drawer Controller -->
+      <script>
+        (() => {
+          if (window.__gomziMobileNavBound) return;
+          window.__gomziMobileNavBound = true;
+
+          const closeMobileNav = () => {
+            const toggle = document.querySelector('[data-nav-toggle]');
+            const menu = document.querySelector('[data-mobile-nav]');
+            if (toggle && menu) {
+              toggle.setAttribute('aria-expanded', 'false');
+              menu.classList.remove('is-open');
+            }
+          };
+
+          const toggleMobileNav = () => {
+            const toggle = document.querySelector('[data-nav-toggle]');
+            const menu = document.querySelector('[data-mobile-nav]');
+            if (!toggle || !menu) return;
+            const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+            toggle.setAttribute('aria-expanded', String(!isOpen));
+            menu.classList.toggle('is-open', !isOpen);
+          };
+
+          document.addEventListener('click', (event) => {
+            const toggle = event.target.closest('[data-nav-toggle]');
+            if (toggle) {
+              event.preventDefault();
+              toggleMobileNav();
+              return;
+            }
+
+            const menu = document.querySelector('[data-mobile-nav]');
+            if (menu && menu.classList.contains('is-open')) {
+              const link = event.target.closest('[data-mobile-nav] a');
+              if (link) {
+                closeMobileNav();
+                return;
+              }
+              if (!event.target.closest('[data-mobile-nav]')) {
+                closeMobileNav();
+              }
+            }
+          });
+
+          document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+              closeMobileNav();
+            }
+          });
+
+          window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+              closeMobileNav();
+            }
+          });
+        })();
+      </script>
+
+      <!-- Goal Dropdown Controller -->
       <script>
         (() => {
           if (window.__gomziGoalDropdownBound) return;
@@ -338,6 +1458,8 @@
           });
         })();
       </script>
+
+      <!-- Counselling Form Controller -->
       <script>
         (() => {
           if (window.__gomziCounsellingFormBound) return;
@@ -439,6 +1561,8 @@
           setTimeout(initCounsellingForms, 0);
         })();
       </script>
+
+      <!-- Prep Slider Controller -->
       <script>
         (() => {
           if (window.__gomziPrepSliderBound) return;
@@ -511,83 +1635,87 @@
         })();
       </script>
     </helmet>
-    <div
-      style="background: #FFFFFF; color: #121411; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; font-size: 16px; line-height: 1.6">
+
+    <div class="site-root">
 
       <!-- TOP BAR -->
-      <div style="background: #121411; color: #FFFFFF; font-size: 13px; text-align: center; padding: 10px 16px">Weight
-        loss is only Level 1. <a href="#journey" style="color: {{accent}}; font-weight: 600">See where we take you next
-          →</a></div>
+      <div class="top-bar">
+        Weight loss is only Level 1. <a href="#journey" style="color: {{accent}}; font-weight: 600">See where we take you next →</a>
+      </div>
 
-      <!-- NAV -->
-      <header style="border-bottom: 1px solid #ECEEE8">
-        <div
-          style="max-width: 1160px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
-          <a href="#" style="display: flex; align-items: center; text-decoration: none">
-            <img src="./images/gomzi-logo.png" alt="Gomzi Rapid Fitness Transformer"
-              style="height: 48px; width: auto; max-width: 100%; display: block; object-fit: contain">
+      <!-- HEADER NAVIGATION -->
+      <header class="site-header">
+        <div class="site-header__container">
+          <a href="#" class="site-logo">
+            <img src="./images/gomzi-logo.png" alt="Gomzi Rapid Fitness Transformer" class="site-logo__img">
           </a>
-          <nav style="display: flex; flex-wrap: wrap; align-items: center; gap: 22px; font-size: 14px">
-            <a href="#journey" style="color: #3A3F37; text-decoration: none">Programs</a>
-            <a href="#prep" style="color: #3A3F37; text-decoration: none">Contest prep</a>
-            <a href="#results" style="color: #3A3F37; text-decoration: none">Results</a>
-            <a href="#faq" style="color: #3A3F37; text-decoration: none">FAQ</a>
-            <a href="#apply"
-              style="background: #121411; color: #FFFFFF; text-decoration: none; font-weight: 600; padding: 10px 18px; border-radius: 999px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Book
-              counselling</a>
+          
+          <!-- Desktop Nav -->
+          <nav class="desktop-nav" aria-label="Main Navigation">
+            <a href="#journey" class="desktop-nav__link">Programs</a>
+            <a href="#prep" class="desktop-nav__link">Contest prep</a>
+            <a href="#results" class="desktop-nav__link">Results</a>
+            <a href="#faq" class="desktop-nav__link">FAQ</a>
+            <a href="#apply" class="nav-cta-btn">Book counselling</a>
+          </nav>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button type="button" class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" data-nav-toggle>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+            <span class="nav-toggle__bar"></span>
+          </button>
+
+          <!-- Mobile Nav Drawer -->
+          <nav class="mobile-nav" data-mobile-nav aria-label="Mobile Navigation">
+            <a href="#journey" class="mobile-nav__link">Programs</a>
+            <a href="#prep" class="mobile-nav__link">Contest prep</a>
+            <a href="#results" class="mobile-nav__link">Results</a>
+            <a href="#faq" class="mobile-nav__link">FAQ</a>
+            <a href="#apply" class="nav-cta-btn">Book counselling call</a>
           </nav>
         </div>
       </header>
 
-      <!-- HERO -->
-      <section
-        style="max-width: 1160px; margin: 0 auto; padding: 64px 24px 48px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
-        <div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
-          <div
-            style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: #F3F7E6; color: #3F5A06; border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600">
+      <!-- HERO SECTION -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="hero-pill">
             <span style="width: 7px; height: 7px; border-radius: 50%; background: {{accent}}"></span>
             Doctor + Dietitian + Coach, For Your Journey
           </div>
-          <h1
-            style="margin: 0; font-weight: 800; font-size: clamp(34px, 4.6vw, 54px); line-height: 1.08; letter-spacing: -0.03em">
+          <h1 class="hero-title">
             Lose the Fat. Build the Muscle. <span style="color: #99c229">Step on Stage.</span>
           </h1>
-          <p style="margin: 0; font-size: 18px; color: #4A5047; max-width: 520px">Most coaches stop when you lose
-            Weight. We keep going, from your first kilo lost to a next-level, stage-ready physique. One team, every
-            single day.</p>
-          <div style="display: flex; flex-wrap: wrap; gap: 10px">
-            <a href="#apply"
-              style="background: {{accent}}; color: #121411; text-decoration: none; font-weight: 700; font-size: 16px; padding: 14px 24px; border-radius: 999px; min-height: 48px; box-sizing: border-box; display: inline-flex; align-items: center; gap: 8px">Book
-              your counselling call
+          <p class="hero-desc">
+            Most coaches stop when you lose Weight. We keep going, from your first kilo lost to a next-level, stage-ready physique. One team, every single day.
+          </p>
+          <div class="hero-cta-group">
+            <a href="#apply" class="hero-cta-btn--primary">
+              Book your counselling call
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M5 12h14M13 6l6 6-6 6"></path>
               </svg>
             </a>
-            <a href="#quiz"
-              style="border: 1px solid #D6D9D0; color: #121411; text-decoration: none; font-weight: 600; font-size: 16px; padding: 14px 22px; border-radius: 999px; min-height: 48px; box-sizing: border-box; display: inline-flex; align-items: center">Which
-              level am I?</a>
+            <a href="#quiz" class="hero-cta-btn--secondary">Which level am I?</a>
           </div>
-          <div style="display: flex; flex-wrap: wrap; gap: 20px; padding-top: 8px; font-size: 14px; color: #5B6157">
+          <div class="hero-stats">
             <div><strong style="color: #121411">10,000+</strong> Transformations</div>
             <div><strong style="color: #121411">15+ yrs</strong> Experience</div>
             <div><strong style="color: #121411">Daily</strong> Follow-Up</div>
           </div>
         </div>
 
-        <div style="flex: 1 1 420px; min-width: 0; position: relative">
-          <div
-            style="height: 480px; border-radius: 24px; background: transparent; overflow: visible">
-            <img src="./images/image1.png" alt="Transformation before and after" style="display: block; width: 100%; height: 100%; object-fit: contain; object-position: center;">
+        <div class="hero-media-wrap">
+          <div class="hero-image-box">
+            <img src="./images/image1.png" alt="Transformation before and after" class="hero-image">
           </div>
-          <div
-            style="position: absolute; left: -16px; bottom: 28px; width: 260px; background: #FFFFFF; border: 1px solid #ECEEE8; border-radius: 16px; padding: 14px 16px; box-shadow: 0 12px 32px rgba(18,20,17,0.10); display: flex; flex-direction: column; gap: 4px">
+          <div class="hero-badge--doctor">
             <div style="font-size: 12px; font-weight: 700; color: #3F5A06">Doctor · 7:42 am</div>
-            <div style="font-size: 14px; color: #2A2E28">Blood reports look good. Keep water at 4 litres and sleep by
-              11.</div>
+            <div style="font-size: 14px; color: #2A2E28">Blood reports look good. Keep water at 4 litres and sleep by 11.</div>
           </div>
-          <div
-            style="position: absolute; right: -10px; top: 28px; background: #121411; color: #FFFFFF; border-radius: 14px; padding: 12px 16px; box-shadow: 0 12px 32px rgba(18,20,17,0.16)">
+          <div class="hero-badge--coach">
             <div style="font-size: 12px; color: #C9CDC1">Coach · 5:30 pm</div>
             <div style="font-size: 14px; font-weight: 600">Leg day. Send your top set.</div>
           </div>
@@ -595,30 +1723,26 @@
       </section>
 
       <!-- QUIZ HOOK -->
-      <section id="quiz" style="max-width: 1160px; margin: 0 auto; padding: 56px 24px">
-        <div
-          style="background: #F7F8F4; border-radius: 24px; padding: 40px 32px; display: flex; flex-direction: column; gap: 24px">
+      <section id="quiz" class="section-quiz">
+        <div class="quiz-card-box">
           <div style="display: flex; flex-direction: column; gap: 6px">
-            <p
-              style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
-              10-second check</p>
-            <h2
-              style="margin: 0; font-weight: 800; font-size: clamp(24px, 2.8vw, 34px); line-height: 1.2; letter-spacing: -0.02em">
-              Which one sounds like you?</h2>
+            <p style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
+              10-second check
+            </p>
+            <h2 style="margin: 0; font-weight: 800; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.2; letter-spacing: -0.02em">
+              Which one sounds like you?
+            </h2>
           </div>
-          <div style="display: flex; flex-wrap: wrap; gap: 12px">
-            <a href="#journey"
-              style="flex: 1 1 280px; background: #FFFFFF; border: 1px solid #E4E7DE; border-radius: 16px; padding: 20px; text-decoration: none; color: #121411; display: flex; flex-direction: column; gap: 6px">
+          <div class="quiz-grid">
+            <a href="#journey" class="quiz-option-card">
               <span style="font-size: 15px; color: #4A5047">“Belly fat, low energy, clothes feel tight.”</span>
               <span style="font-weight: 700; color: #3F5A06">→ Start at Level 1: Fat loss</span>
             </a>
-            <a href="#journey"
-              style="flex: 1 1 280px; background: #FFFFFF; border: 1px solid #E4E7DE; border-radius: 16px; padding: 20px; text-decoration: none; color: #121411; display: flex; flex-direction: column; gap: 6px">
+            <a href="#journey" class="quiz-option-card">
               <span style="font-size: 15px; color: #4A5047">“I’m lean, but I look skinny in a T-shirt.”</span>
               <span style="font-weight: 700; color: #3F5A06">→ Start at Level 2: Muscle</span>
             </a>
-            <a href="#prep"
-              style="flex: 1 1 280px; background: #121411; border: 1px solid #121411; border-radius: 16px; padding: 20px; text-decoration: none; color: #FFFFFF; display: flex; flex-direction: column; gap: 6px">
+            <a href="#prep" class="quiz-option-card quiz-option-card--dark">
               <span style="font-size: 15px; color: #D6D9D0">“I’m built. I want the stage.”</span>
               <span style="font-weight: 700; color: {{accent}}">→ Go straight to Level 3: Prep</span>
             </a>
@@ -627,77 +1751,64 @@
       </section>
 
       <!-- JOURNEY -->
-      <section id="journey"
-        style="max-width: 1160px; margin: 0 auto; padding: 56px 24px; display: flex; flex-direction: column; gap: 32px">
+      <section id="journey" class="section-journey">
         <div style="display: flex; flex-direction: column; gap: 8px; max-width: 640px">
-          <p
-            style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
-            The Gomzi path</p>
-          <h2
-            style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
-            Most People Stop at Weight Loss. Our Members Don’t.</h2>
+          <p style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
+            The Gomzi path
+          </p>
+          <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
+            Most People Stop at Weight Loss. Our Members Don’t.
+          </h2>
           <p style="margin: 0; color: #4A5047">Hit your goal at one level, and the same team moves you to the next.</p>
         </div>
 
-        <div style="display: flex; flex-wrap: wrap; gap: 16px">
-          <article
-            style="flex: 1 1 300px; min-width: 0; border: 1px solid #ECEEE8; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">
-            <div style="height: 200px; background: #F4F5F1; overflow: hidden">
-              <img src="./images/fat-loss-before-after.png" alt="Fat loss transformation before and after"
-                style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center">
+        <div class="journey-grid">
+          <article class="journey-card">
+            <div class="journey-card__image-wrap">
+              <img src="./images/fat-loss-before-after.png" alt="Fat loss transformation before and after" class="journey-card__image">
             </div>
-            <div style="padding: 22px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto">
+            <div class="journey-card__body">
               <div style="font-size: 12px; font-weight: 700; color: #5B6157; letter-spacing: 0.08em">LEVEL 01</div>
               <h3 style="margin: 0; font-size: 20px; font-weight: 700">Fat Loss Transformation</h3>
-              <p style="margin: 0; color: #4A5047; font-size: 15px">No crash diets. Built on your regular home food,
-                with gym or home workouts.</p>
-              <div style="margin-top: auto; padding-top: 12px; font-size: 14px; color: #5B6157">Next → <strong
-                  style="color: #121411">Muscle building</strong></div>
+              <p style="margin: 0; color: #4A5047; font-size: 15px">No crash diets. Built on your regular home food, with gym or home workouts.</p>
+              <div style="margin-top: auto; padding-top: 12px; font-size: 14px; color: #5B6157">Next → <strong style="color: #121411">Muscle building</strong></div>
             </div>
           </article>
-          <article
-            style="flex: 1 1 300px; min-width: 0; border: 1px solid #ECEEE8; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">
-            <div style="height: 200px; background: #F4F5F1; overflow: hidden">
-              <img src="./images/physique-building-before-after-v2.png" alt="Physique building transformation before and after"
-                style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center">
+          
+          <article class="journey-card">
+            <div class="journey-card__image-wrap">
+              <img src="./images/physique-building-before-after-v2.png" alt="Physique building transformation before and after" class="journey-card__image">
             </div>
-            <div style="padding: 22px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto">
+            <div class="journey-card__body">
               <div style="font-size: 12px; font-weight: 700; color: #5B6157; letter-spacing: 0.08em">LEVEL 02</div>
               <h3 style="margin: 0; font-size: 20px; font-weight: 700">Muscle &amp; Physique Building</h3>
-              <p style="margin: 0; color: #4A5047; font-size: 15px">Add quality muscle, look athletic and keep the fat
-                off for good.</p>
-              <div style="margin-top: auto; padding-top: 12px; font-size: 14px; color: #5B6157">Next → <strong
-                  style="color: #121411">Prep Coaching </strong></div>
+              <p style="margin: 0; color: #4A5047; font-size: 15px">Add quality muscle, look athletic and keep the fat off for good.</p>
+              <div style="margin-top: auto; padding-top: 12px; font-size: 14px; color: #5B6157">Next → <strong style="color: #121411">Prep Coaching</strong></div>
             </div>
           </article>
-          <article
-            style="flex: 1 1 300px; min-width: 0; border: 2px solid {{accent}}; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column">
-            <div style="height: 200px; background: #F3F7E6; overflow: hidden">
-              <img src="./images/physique-building-before-after.png" alt="Physique building transformation before and after"
-                style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center">
+          
+          <article class="journey-card journey-card--special">
+            <div class="journey-card__image-wrap journey-card__image-wrap--special">
+              <img src="./images/physique-building-before-after.png" alt="Physique building transformation before and after" class="journey-card__image">
             </div>
-            <div style="padding: 22px; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto">
+            <div class="journey-card__body">
               <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
                 <div style="font-size: 12px; font-weight: 700; color: #3F5A06; letter-spacing: 0.08em">LEVEL 03</div>
-                <div
-                  style="background: {{accent}}; color: #121411; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px">
-                  SPECIALITY</div>
+                <div style="background: {{accent}}; color: #121411; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px">
+                  SPECIALITY
+                </div>
               </div>
               <h3 style="margin: 0; font-size: 20px; font-weight: 700">Prep Coaching</h3>
-              <p style="margin: 0; color: #4A5047; font-size: 15px">A next-level, conditioned physique, ready for stage
-                or simply the best shape of your life.</p>
-              <a href="#apply"
-                style="margin-top: auto; align-self: flex-start; color: #3F5A06; font-weight: 700; font-size: 14px">Find
-                my starting level →</a>
+              <p style="margin: 0; color: #4A5047; font-size: 15px">A next-level, conditioned physique, ready for stage or simply the best shape of your life.</p>
+              <a href="#apply" style="margin-top: auto; align-self: flex-start; color: #3F5A06; font-weight: 700; font-size: 14px">Find my starting level →</a>
             </div>
           </article>
         </div>
       </section>
 
       <!-- DIRECT PREP -->
-      <section id="prep" style="max-width: 1160px; margin: 0 auto; padding: 56px 24px">
-        <div
-          style="background: #121411; color: #FFFFFF; border-radius: 28px; padding: 48px 36px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+      <section id="prep" class="section-prep">
+        <div class="prep-container">
           <div class="prep-slider" data-prep-slider data-index="0" role="region" aria-label="Competition prep results carousel">
             <figure class="prep-slider__slide" data-prep-slide-item data-active="true" aria-hidden="false">
               <img class="prep-slider__image" src="./images/competition-lineup.png"
@@ -730,199 +1841,165 @@
                 aria-current="false"></button>
             </div>
           </div>
-          <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-            <p
-              style="margin: 0; color: {{accent}}; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
-              Already in shape?</p>
-            <h2
-              style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
-              Skip the line. Go straight to contest prep.</h2>
-            <p style="margin: 0; color: #C9CDC1">Bodybuilding, men’s physique and classic physique. First show or tenth,
-              we plan every phase so you arrive conditioned, full and healthy.</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px">
-              <span
-                style="border: 1px solid #3A3F37; border-radius: 999px; padding: 7px 14px; font-size: 14px">Off-Season</span>
-              <span style="border: 1px solid #3A3F37; border-radius: 999px; padding: 7px 14px; font-size: 14px">The
-                Cut</span>
-              <span style="border: 1px solid #3A3F37; border-radius: 999px; padding: 7px 14px; font-size: 14px">Peak
-                Week</span>
-              <span style="border: 1px solid #3A3F37; border-radius: 999px; padding: 7px 14px; font-size: 14px">Show
-                Day</span>
-              <span
-                style="border: 1px solid {{accent}}; color: {{accent}}; border-radius: 999px; padding: 7px 14px; font-size: 14px">Doctor-Supervised</span>
+          <div class="prep-content">
+            <p style="margin: 0; color: {{accent}}; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
+              Already in shape?
+            </p>
+            <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
+              Skip the line. Go straight to contest prep.
+            </h2>
+            <p style="margin: 0; color: #C9CDC1">Bodybuilding, men’s physique and classic physique. First show or tenth, we plan every phase so you arrive conditioned, full and healthy.</p>
+            <div class="prep-tags">
+              <span class="prep-tag">Off-Season</span>
+              <span class="prep-tag">The Cut</span>
+              <span class="prep-tag">Peak Week</span>
+              <span class="prep-tag">Show Day</span>
+              <span class="prep-tag prep-tag--accent">Doctor-Supervised</span>
             </div>
-            <a href="#apply"
-              style="align-self: flex-start; margin-top: 8px; background: {{accent}}; color: #121411; text-decoration: none; font-weight: 700; padding: 14px 24px; border-radius: 999px; min-height: 48px; box-sizing: border-box; display: inline-flex; align-items: center">Apply
-              for Prep Coaching</a>
+            <a href="#apply" class="hero-cta-btn--primary" style="align-self: flex-start; margin-top: 8px">Apply for Prep Coaching</a>
           </div>
         </div>
       </section>
 
       <!-- RESULTS -->
-      <section id="results"
-        style="max-width: 1160px; margin: 0 auto; padding: 56px 24px; display: flex; flex-direction: column; gap: 28px">
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <section id="results" class="section-results">
+        <div class="results-header">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <p
-              style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
-              Real members</p>
-            <h2
-              style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
-              Don’t take our word. Look.</h2>
+            <p style="margin: 0; color: #3F5A06; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase">
+              Real members
+            </p>
+            <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.5vw, 40px); line-height: 1.15; letter-spacing: -0.02em">
+              Don’t take our word. Look.
+            </h2>
           </div>
           <a href="#apply" style="font-weight: 600; font-size: 15px">Start yours →</a>
         </div>
-        <div style="display: flex; flex-wrap: wrap; gap: 16px">
-          <figure style="margin: 0; flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
-            <div style="display: flex; gap: 4px">
-              <div
-                style="position: relative; flex: 1 1 0; height: 260px; border-radius: 14px 0 0 14px; background: #F4F5F1; overflow: hidden">
-                <img src="./images/weight-loss-before.png" alt="Weight loss transformation before"
-                  style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top">
-                <span
-                  style="position: absolute; left: 10px; bottom: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(18,20,17,0.78); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em">BEFORE</span>
+
+        <div class="results-grid">
+          <figure class="result-figure">
+            <div class="result-split">
+              <div class="result-split__item result-split__item--before">
+                <img src="./images/weight-loss-before.png" alt="Weight loss transformation before" class="result-split__img">
+                <span class="result-badge result-badge--before">BEFORE</span>
               </div>
-              <div
-                style="position: relative; flex: 1 1 0; height: 260px; border-radius: 0 14px 14px 0; background: #EEF3DF; overflow: hidden">
-                <img src="./images/weight-loss-after.png" alt="Weight loss transformation after"
-                  style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top">
-                <span
-                  style="position: absolute; right: 10px; bottom: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(63,90,6,0.84); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em">AFTER</span>
+              <div class="result-split__item result-split__item--after">
+                <img src="./images/weight-loss-after.png" alt="Weight loss transformation after" class="result-split__img">
+                <span class="result-badge result-badge--after">AFTER</span>
               </div>
             </div>
-            <figcaption style="font-size: 14px"><strong>Weight Loss</strong> <span style="color: #5B6157">· 2.5
-                Months</span></figcaption>
+            <figcaption style="font-size: 14px"><strong>Weight Loss</strong> <span style="color: #5B6157">· 2.5 Months</span></figcaption>
           </figure>
-          <figure style="margin: 0; flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
-            <div style="display: flex; gap: 4px">
-              <div
-                style="position: relative; flex: 1 1 0; height: 260px; border-radius: 14px 0 0 14px; background: #F4F5F1; overflow: hidden">
-                <img src="./images/physique-building-before.png" alt="Physique building transformation before"
-                  style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top">
-                <span
-                  style="position: absolute; left: 10px; bottom: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(18, 20, 17, 0.78); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em">BEFORE</span>
+
+          <figure class="result-figure">
+            <div class="result-split">
+              <div class="result-split__item result-split__item--before">
+                <img src="./images/physique-building-before.png" alt="Physique building transformation before" class="result-split__img">
+                <span class="result-badge result-badge--before">BEFORE</span>
               </div>
-              <div
-                style="position: relative; flex: 1 1 0; height: 260px; border-radius: 0 14px 14px 0; background: #EEF3DF; overflow: hidden">
-                <img src="./images/physique-building-after.png" alt="Physique building transformation after"
-                  style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top">
-                <span
-                  style="position: absolute; right: 10px; bottom: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(63, 90, 6, 0.88); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em">AFTER</span>
+              <div class="result-split__item result-split__item--after">
+                <img src="./images/physique-building-after.png" alt="Physique building transformation after" class="result-split__img">
+                <span class="result-badge result-badge--after">AFTER</span>
               </div>
             </div>
-            <figcaption style="font-size: 14px"><strong>Physique Building</strong> <span style="color: #5B6157">· 9
-                Months</span></figcaption>
+            <figcaption style="font-size: 14px"><strong>Physique Building</strong> <span style="color: #5B6157">· 9 Months</span></figcaption>
           </figure>
-          <figure style="margin: 0; flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
-            <div style="display: flex; gap: 4px">
-              <div
-                style="position: relative; flex: 1 1 0; height: 260px; border-radius: 14px 0 0 14px; background: #F4F5F1; overflow: hidden">
-                <img src="./images/fat-loss-to-stage-before.png" alt="Fat loss to stage transformation before"
-                  style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top">
-                <span
-                  style="position: absolute; left: 10px; bottom: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(18, 20, 17, 0.78); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em">BEFORE</span>
+
+          <figure class="result-figure">
+            <div class="result-split">
+              <div class="result-split__item result-split__item--before">
+                <img src="./images/fat-loss-to-stage-before.png" alt="Fat loss to stage transformation before" class="result-split__img">
+                <span class="result-badge result-badge--before">BEFORE</span>
               </div>
-<div
-                style="position: relative; flex: 1 1 0; height: 260px; border-radius: 14px 0 0 14px; background: #F4F5F1; overflow: hidden">
-                <img src="./images/fat-loss-after.png" alt="Fat loss to stage transformation before"
-                  style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top">
-                <span
-                  style="position: absolute; left: 10px; bottom: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(18, 20, 17, 0.78); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em">BEFORE</span>
-              </div>            </div>
-            <figcaption style="font-size: 14px"><strong>Fat Loss to Stage</strong> <span style="color: #5B6157">· Level
-                1 → 3</span></figcaption>
-          </figure>
-          <figure style="margin: 0; flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
-            <div style="display: flex; gap: 4px">
-              <div
-                style="position: relative; flex: 1 1 0; height: 260px; border-radius: 14px 0 0 14px; background: #F4F5F1; overflow: hidden">
-                <img src="./images/competition-prep-before.png" alt="Competition prep transformation before"
-                  style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top">
-                <span
-                  style="position: absolute; left: 10px; bottom: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(18, 20, 17, 0.78); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em">BEFORE</span>
-              </div>
-              <div
-                style="position: relative; flex: 1 1 0; height: 260px; border-radius: 0 14px 14px 0; background: #EEF3DF; overflow: hidden">
-                <img src="./images/competition-prep-after.png" alt="Competition prep transformation after"
-                  style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center top">
-                <span
-                  style="position: absolute; right: 10px; bottom: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(63, 90, 6, 0.88); color: #FFFFFF; font-size: 11px; font-weight: 700; letter-spacing: 0.05em">AFTER</span>
+              <div class="result-split__item result-split__item--after">
+                <img src="./images/fat-loss-after.png" alt="Fat loss to stage transformation after" class="result-split__img">
+                <span class="result-badge result-badge--after">AFTER</span>
               </div>
             </div>
-            <figcaption style="font-size: 14px"><strong>Competition Prep</strong> <span style="color: #5B6157">· 3
-                Months </span></figcaption>
+            <figcaption style="font-size: 14px"><strong>Fat Loss to Stage</strong> <span style="color: #5B6157">· Level 1 → 3</span></figcaption>
+          </figure>
+
+          <figure class="result-figure">
+            <div class="result-split">
+              <div class="result-split__item result-split__item--before">
+                <img src="./images/competition-prep-before.png" alt="Competition prep transformation before" class="result-split__img">
+                <span class="result-badge result-badge--before">BEFORE</span>
+              </div>
+              <div class="result-split__item result-split__item--after">
+                <img src="./images/competition-prep-after.png" alt="Competition prep transformation after" class="result-split__img">
+                <span class="result-badge result-badge--after">AFTER</span>
+              </div>
+            </div>
+            <figcaption style="font-size: 14px"><strong>Competition Prep</strong> <span style="color: #5B6157">· 3 Months</span></figcaption>
           </figure>
         </div>
-        <p style="margin: 0; font-size: 12px; color: #5B6157">Shared with members’ permission. Results vary with
-          starting point, consistency and health status.</p>
+
+        <p style="margin: 0; font-size: 12px; color: #5B6157">Shared with members’ permission. Results vary with starting point, consistency and health status.</p>
       </section>
 
       <!-- HOW + DOCTOR -->
-      <section style="max-width: 1160px; margin: 0 auto; padding: 56px 24px; display: flex; flex-wrap: wrap; gap: 48px">
-        <div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
-          <h2
-            style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.2vw, 36px); line-height: 1.15; letter-spacing: -0.02em">
-            You’re never on your own after day one.</h2>
-          <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 16px">
-            <li style="display: flex; gap: 14px"><span
-                style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: {{accent}}; color: #121411; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center">1</span>
-              <div><strong>Counselling Call</strong>
+      <section class="section-how">
+        <div class="how-steps">
+          <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; letter-spacing: -0.02em">
+            You’re never on your own after day one.
+          </h2>
+          <ol class="how-list">
+            <li class="how-list__item">
+              <span class="how-list__num how-list__num--accent">1</span>
+              <div>
+                <strong>Counselling Call</strong>
                 <div style="color: #4A5047; font-size: 15px">Your goal, timeline and starting point.</div>
               </div>
             </li>
-            <li style="display: flex; gap: 14px"><span
-                style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: #F1F3EC; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center">2</span>
-              <div><strong>Deep Analysis</strong>
+            <li class="how-list__item">
+              <span class="how-list__num">2</span>
+              <div>
+                <strong>Deep Analysis</strong>
                 <div style="color: #4A5047; font-size: 15px">Medical history, reports, diet and lifestyle.</div>
               </div>
             </li>
-            <li style="display: flex; gap: 14px"><span
-                style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: #F1F3EC; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center">3</span>
-              <div><strong>Your Private Group</strong>
+            <li class="how-list__item">
+              <span class="how-list__num">3</span>
+              <div>
+                <strong>Your Private Group</strong>
                 <div style="color: #4A5047; font-size: 15px">Doctor, dietitian and coach, with you.</div>
               </div>
             </li>
-            <li style="display: flex; gap: 14px"><span
-                style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: #F1F3EC; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center">5</span>
-              <div><strong>Daily Follow-Up</strong>
+            <li class="how-list__item">
+              <span class="how-list__num">4</span>
+              <div>
+                <strong>Daily Follow-Up</strong>
                 <div style="color: #4A5047; font-size: 15px">Adjusted day by day, then on to the next level.</div>
               </div>
             </li>
           </ol>
         </div>
-        <div
-          style="flex: 1 1 400px; min-width: 0; background: #F7F8F4; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+
+        <div class="doctor-card">
           <div style="display: flex; gap: 16px; align-items: center">
-            <div
-              style="flex: 0 0 88px; height: 88px; border-radius: 50%; background: #E4E7DE; overflow: hidden">
-              <img src="./images/dr-gautam-jani.png" alt="Dr. Gautam Jani"
-                style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center">
+            <div style="flex: 0 0 80px; width: 80px; height: 80px; border-radius: 50%; background: #E4E7DE; overflow: hidden">
+              <img src="./images/dr-gautam-jani.png" alt="Dr. Gautam Jani" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center">
             </div>
             <div>
               <div style="font-weight: 800; font-size: 20px">Dr. Gautam Jani</div>
               <div style="color: #4A5047; font-size: 14px">PhD, Health &amp; Fitness · Founder, Gomzi</div>
             </div>
           </div>
-          <p style="margin: 0; color: #3A3F37; font-size: 15px">15+ years in fitness. His team of doctors, dietitians
-            and coaches has guided 10,000+ people, and every program on this page runs directly under him.</p>
-          <blockquote
-            style="margin: 0; padding-top: 16px; border-top: 1px solid #E4E7DE; font-size: 17px; font-weight: 600; line-height: 1.45">
-            “Health is never traded for a number on the scale or a placing on stage.”</blockquote>
+          <p style="margin: 0; color: #3A3F37; font-size: 15px">15+ years in fitness. His team of doctors, dietitians and coaches has guided 10,000+ people, and every program on this page runs directly under him.</p>
+          <blockquote style="margin: 0; padding-top: 16px; border-top: 1px solid #E4E7DE; font-size: 17px; font-weight: 600; line-height: 1.45">
+            “Health is never traded for a number on the scale or a placing on stage.”
+          </blockquote>
         </div>
       </section>
 
       <!-- APPLY -->
-      <section id="apply" style="max-width: 1160px; margin: 0 auto; padding: 56px 24px 72px">
-        <div
-          style="background: #F3F7E6; border-radius: 28px; padding: 48px 36px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
-          <div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
-            <h2
-              style="margin: 0; font-weight: 800; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.12; letter-spacing: -0.02em">
-              Six Months From Now, You’ll Wish You Started Today.</h2>
-            <p style="margin: 0; color: #3A3F37">Book a counselling call. We’ll tell you honestly which level to start
-              at, online or offline in Surat.</p>
-            <a href="https://wa.me/918866842520"
-              style="align-self: flex-start; margin-top: 6px; color: #121411; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; min-height: 44px">
+      <section id="apply" class="section-apply">
+        <div class="apply-container">
+          <div class="apply-info">
+            <h2 style="margin: 0; font-weight: 800; font-size: clamp(26px, 3.6vw, 42px); line-height: 1.12; letter-spacing: -0.02em">
+              Six Months From Now, You’ll Wish You Started Today.
+            </h2>
+            <p style="margin: 0; color: #3A3F37">Book a counselling call. We’ll tell you honestly which level to start at, online or offline in Surat.</p>
+            <a href="https://wa.me/918866842520" target="_blank" rel="noopener noreferrer" style="align-self: flex-start; margin-top: 6px; color: #121411; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; min-height: 44px">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"></path>
@@ -930,23 +2007,18 @@
               Or WhatsApp +91 88668 42520
             </a>
           </div>
-          <form data-counselling-form data-endpoint-key="BACKEND_URL"
-            style="flex: 1 1 400px; min-width: 0; background: #FFFFFF; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 8px 28px rgba(18,20,17,0.06); box-sizing: border-box">
-            <label
-              style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3F37">Full
-              Name
-              <input type="text" name="name" placeholder="Your name" autocomplete="name" required
-                style="min-height: 46px; border-radius: 10px; border: 1px solid #D6D9D0; background: #FFFFFF; color: #121411; padding: 0 14px; font-size: 15px; font-family: inherit">
+
+          <form data-counselling-form data-endpoint-key="BACKEND_URL" class="apply-form">
+            <label class="apply-field">
+              Full Name
+              <input type="text" name="name" placeholder="Your name" autocomplete="name" required class="apply-input">
             </label>
-            <label
-              style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3F37">WhatsApp
-              Number
+            <label class="apply-field">
+              WhatsApp Number
               <input type="tel" name="mobile" placeholder="10-digit mobile number" autocomplete="tel" inputmode="numeric"
-                minlength="10" maxlength="14" required
-                style="min-height: 46px; border-radius: 10px; border: 1px solid #D6D9D0; background: #FFFFFF; color: #121411; padding: 0 14px; font-size: 15px; font-family: inherit">
+                minlength="10" maxlength="14" required class="apply-input">
             </label>
-            <div
-              style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3F37">
+            <div class="apply-field">
               <span>Your Goal</span>
               <div class="goal-dropdown" data-goal-dropdown>
                 <input type="hidden" name="goal" value="Fat Loss (Level 1)">
@@ -1009,64 +2081,55 @@
                 </div>
               </div>
             </div>
-            <button type="submit" data-counselling-submit
-              style="min-height: 50px; margin-top: 4px; border: 0; border-radius: 999px; background: #121411; color: #FFFFFF; font-weight: 700; font-size: 16px; font-family: inherit; cursor: pointer">Book
-              my counselling call</button>
-            <p data-counselling-status role="status" aria-live="polite" hidden
-              style="margin: 0; font-size: 13px; font-weight: 600; text-align: center"></p>
-            <p style="margin: 0; font-size: 12px; color: #5B6157; text-align: center">Takes about 3 minutes · Keep a
-              front and back photo ready</p>
+            <button type="submit" data-counselling-submit class="apply-submit-btn">Book my counselling call</button>
+            <p data-counselling-status role="status" aria-live="polite" hidden style="margin: 0; font-size: 13px; font-weight: 600; text-align: center"></p>
+            <p style="margin: 0; font-size: 12px; color: #5B6157; text-align: center">Takes about 3 minutes · Keep a front and back photo ready</p>
           </form>
         </div>
       </section>
 
       <!-- FAQ -->
-      <section id="faq"
-        style="max-width: 760px; margin: 0 auto; padding: 24px 24px 72px; display: flex; flex-direction: column">
-        <h2 style="margin: 0 0 16px; font-weight: 800; font-size: clamp(24px, 2.8vw, 32px); letter-spacing: -0.02em">
-          Questions before joining</h2>
-        <details style="border-bottom: 1px solid #ECEEE8; padding: 16px 0">
-          <summary style="font-weight: 600; cursor: pointer">I’m overweight now. Can I still reach the stage one day?
-          </summary>
-          <p style="margin: 10px 0 0; color: #4A5047; font-size: 15px">That’s what the three levels are for. Fat loss
-            first, then muscle, then prep when your physique is ready.</p>
+      <section id="faq" class="section-faq">
+        <h2 style="margin: 0 0 16px; font-weight: 800; font-size: clamp(24px, 3.2vw, 32px); letter-spacing: -0.02em">
+          Questions before joining
+        </h2>
+        <details class="faq-item">
+          <summary class="faq-summary">I’m overweight now. Can I still reach the stage one day?</summary>
+          <p class="faq-body">That’s what the three levels are for. Fat loss first, then muscle, then prep when your physique is ready.</p>
         </details>
-        <details style="border-bottom: 1px solid #ECEEE8; padding: 16px 0">
-          <summary style="font-weight: 600; cursor: pointer">I’ve never competed. Can I do contest prep?</summary>
-          <p style="margin: 10px 0 0; color: #4A5047; font-size: 15px">Yes. On the counselling call we’ll tell you
-            honestly which show and category make sense.</p>
+        <details class="faq-item">
+          <summary class="faq-summary">I’ve never competed. Can I do contest prep?</summary>
+          <p class="faq-body">Yes. On the counselling call we’ll tell you honestly which show and category make sense.</p>
         </details>
-        <details style="border-bottom: 1px solid #ECEEE8; padding: 16px 0">
-          <summary style="font-weight: 600; cursor: pointer">Do I need to live in Surat?</summary>
-          <p style="margin: 10px 0 0; color: #4A5047; font-size: 15px">No. Most members are coached online. Offline
-            training in Surat is there if you’re nearby.</p>
+        <details class="faq-item">
+          <summary class="faq-summary">Do I need to live in Surat?</summary>
+          <p class="faq-body">No. Most members are coached online. Offline training in Surat is there if you’re nearby.</p>
         </details>
-        <details style="border-bottom: 1px solid #ECEEE8; padding: 16px 0">
-          <summary style="font-weight: 600; cursor: pointer">How is my health monitored?</summary>
-          <p style="margin: 10px 0 0; color: #4A5047; font-size: 15px">A doctor is in your group from day one and keeps
-            checking your reports and health markers throughout.</p>
+        <details class="faq-item">
+          <summary class="faq-summary">How is my health monitored?</summary>
+          <p class="faq-body">A doctor is in your group from day one and keeps checking your reports and health markers throughout.</p>
         </details>
-        <details style="border-bottom: 1px solid #ECEEE8; padding: 16px 0">
-          <summary style="font-weight: 600; cursor: pointer">Do I need special food or supplements?</summary>
-          <p style="margin: 10px 0 0; color: #4A5047; font-size: 15px">No. Your diet is regular Indian home food.
-            Supplements only if they fit your goal and budget.</p>
+        <details class="faq-item">
+          <summary class="faq-summary">Do I need special food or supplements?</summary>
+          <p class="faq-body">No. Your diet is regular Indian home food. Supplements only if they fit your goal and budget.</p>
         </details>
       </section>
 
       <!-- FOOTER -->
-      <footer style="border-top: 1px solid #ECEEE8">
-        <div
-          style="max-width: 1160px; margin: 0 auto; padding: 28px 24px; display: flex; flex-direction: column; gap: 8px; font-size: 12px; color: #5B6157">
-          <div style="color: #121411; font-weight: 700; font-size: 13px">Fitness With Gomzi, Surat, Gujarat · WhatsApp
-            +91 88668 42520</div>
-          <p style="margin: 0; max-width: 820px">For general awareness only; not a substitute for consultation with a
-            qualified medical professional. Any medical decision is made only by our doctor after assessing you
-            individually. Results vary.</p>
+      <footer class="site-footer">
+        <div class="footer-container">
+          <div style="color: #121411; font-weight: 700; font-size: 13px">
+            Fitness With Gomzi, Surat, Gujarat · WhatsApp +91 88668 42520
+          </div>
+          <p style="margin: 0; max-width: 820px; line-height: 1.5">
+            For general awareness only; not a substitute for consultation with a qualified medical professional. Any medical decision is made only by our doctor after assessing you individually. Results vary.
+          </p>
           <div>© Gomzi. All rights reserved.</div>
         </div>
       </footer>
     </div>
   </x-dc>
+
   <script type="text/x-dc" data-dc-script
     data-props='{"accent":{"editor":"color","default":"#9BC028","options":["#9BC028","#C6F432","#F5A524","#4FB3FF"]},"$preview":{"width":1440,"height":5600}}'>
 class Component extends DCLogic {
