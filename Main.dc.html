@@ -339,6 +339,101 @@
       </script>
       <script>
         (() => {
+          if (window.__gomziCounsellingFormBound) return;
+          window.__gomziCounsellingFormBound = true;
+
+          const initCounsellingForms = () => {
+            document.querySelectorAll('[data-counselling-form]').forEach((form) => {
+              if (form.getAttribute('data-ready') === 'true') return;
+              form.setAttribute('data-ready', 'true');
+
+              form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const nameInput = form.querySelector('[name="name"]');
+                const mobileInput = form.querySelector('[name="mobile"]');
+                const goalInput = form.querySelector('[name="goal"]');
+                const submitButton = form.querySelector('[data-counselling-submit]');
+                const status = form.querySelector('[data-counselling-status]');
+                const name = nameInput.value.trim();
+                const mobile = mobileInput.value.replace(/\D/g, '').slice(-10);
+                const goal = goalInput.value;
+
+                const showStatus = (message, isError = false) => {
+                  status.hidden = false;
+                  status.textContent = message;
+                  status.style.color = isError ? '#B42318' : '#3F5A06';
+                };
+
+                if (!name) {
+                  showStatus('Please enter your full name.', true);
+                  nameInput.focus();
+                  return;
+                }
+
+                if (!/^[6-9]\d{9}$/.test(mobile)) {
+                  showStatus('Please enter a valid 10-digit mobile number.', true);
+                  mobileInput.focus();
+                  return;
+                }
+
+                const payload = {
+                  name,
+                  email: `lead-${mobile}@example.invalid`,
+                  mobile: `+91${mobile}`,
+                  message: `Counselling request for ${goal}`,
+                  subject: 'FWG Landing Page Counselling',
+                  source: 'fitnesswithgomzi',
+                  details: {
+                    goal,
+                    landingPage: window.location.href
+                  }
+                };
+
+                const originalLabel = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting…';
+                submitButton.style.opacity = '0.72';
+                status.hidden = true;
+
+                try {
+                  const response = await fetch(form.getAttribute('data-endpoint'), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                  });
+                  const responseText = await response.text();
+                  let responseData = null;
+                  try {
+                    responseData = responseText ? JSON.parse(responseText) : null;
+                  } catch {
+                    responseData = null;
+                  }
+
+                  if (!response.ok) {
+                    throw new Error(responseData?.message || 'Unable to submit your request.');
+                  }
+
+                  showStatus('Thank you! Your counselling request has been submitted.');
+                  nameInput.value = '';
+                  mobileInput.value = '';
+                } catch (error) {
+                  showStatus(error.message || 'Unable to connect to the server. Please try again.', true);
+                } finally {
+                  submitButton.disabled = false;
+                  submitButton.textContent = originalLabel;
+                  submitButton.style.opacity = '';
+                }
+              });
+            });
+          };
+
+          document.addEventListener('DOMContentLoaded', initCounsellingForms);
+          setTimeout(initCounsellingForms, 0);
+        })();
+      </script>
+      <script>
+        (() => {
           if (window.__gomziPrepSliderBound) return;
           window.__gomziPrepSliderBound = true;
 
@@ -828,18 +923,19 @@
               Or WhatsApp +91 88668 42520
             </a>
           </div>
-          <div
+          <form data-counselling-form data-endpoint="http://localhost/public/v1/contact-inquiry"
             style="flex: 1 1 400px; min-width: 0; background: #FFFFFF; border-radius: 20px; padding: 28px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 8px 28px rgba(18,20,17,0.06); box-sizing: border-box">
             <label
               style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3F37">Full
               Name
-              <input type="text" placeholder="Your name"
+              <input type="text" name="name" placeholder="Your name" autocomplete="name" required
                 style="min-height: 46px; border-radius: 10px; border: 1px solid #D6D9D0; background: #FFFFFF; color: #121411; padding: 0 14px; font-size: 15px; font-family: inherit">
             </label>
             <label
               style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #3A3F37">WhatsApp
               Number
-              <input type="tel" placeholder="10-digit mobile number"
+              <input type="tel" name="mobile" placeholder="10-digit mobile number" autocomplete="tel" inputmode="numeric"
+                minlength="10" maxlength="14" required
                 style="min-height: 46px; border-radius: 10px; border: 1px solid #D6D9D0; background: #FFFFFF; color: #121411; padding: 0 14px; font-size: 15px; font-family: inherit">
             </label>
             <div
@@ -906,12 +1002,14 @@
                 </div>
               </div>
             </div>
-            <button type="button"
+            <button type="submit" data-counselling-submit
               style="min-height: 50px; margin-top: 4px; border: 0; border-radius: 999px; background: #121411; color: #FFFFFF; font-weight: 700; font-size: 16px; font-family: inherit; cursor: pointer">Book
               my counselling call</button>
+            <p data-counselling-status role="status" aria-live="polite" hidden
+              style="margin: 0; font-size: 13px; font-weight: 600; text-align: center"></p>
             <p style="margin: 0; font-size: 12px; color: #5B6157; text-align: center">Takes about 3 minutes · Keep a
               front and back photo ready</p>
-          </div>
+          </form>
         </div>
       </section>
 
