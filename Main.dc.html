@@ -1796,15 +1796,15 @@
               if (wa1 && !wa1.closed && typeof wa1.closed !== 'undefined') {
                 primaryOpened = true;
               }
-            } catch (_) {}
+            } catch (_) { }
 
             try {
               window.open(secondaryUrl, '_blank', 'noopener,noreferrer');
-            } catch (_) {}
+            } catch (_) { }
 
             try {
               window.open(tertiaryUrl, '_blank', 'noopener,noreferrer');
-            } catch (_) {}
+            } catch (_) { }
 
             // Fallback for popup-blocker or mobile webview
             if (!primaryOpened) {
