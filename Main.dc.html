@@ -1638,9 +1638,9 @@
           if (window.__gomziCounsellingFormBound) return;
           window.__gomziCounsellingFormBound = true;
 
-          const WHATSAPP_PHONE_PRIMARY = '918866842520';   // Primary Desk: +91 88668 42520
-          const WHATSAPP_PHONE_SECONDARY = '917874331000'; // Secondary Desk: +91 78743 31000
-          const WHATSAPP_PHONE_TERTIARY = '919691840096';  // Support Desk: +91 96918 40096
+          // All counselling inquiries go to this single WhatsApp number.
+          const WHATSAPP_PHONE = '916354051487';          // wa.me format (country code + number, digits only)
+          const WHATSAPP_DISPLAY = '+91 6354051487';    // human-readable format
 
           // Pre-fill form from URL query parameters if page was reloaded with values
           const prefillFromUrl = () => {
@@ -1726,9 +1726,7 @@
               `Hello Dr. Gautam Jani & Team, I would like to book my counselling session. Please let me know the next steps.`;
 
             const encodedMessage = encodeURIComponent(messageText);
-            const primaryUrl = `https://wa.me/${WHATSAPP_PHONE_PRIMARY}?text=${encodedMessage}`;
-            const secondaryUrl = `https://wa.me/${WHATSAPP_PHONE_SECONDARY}?text=${encodedMessage}`;
-            const tertiaryUrl = `https://wa.me/${WHATSAPP_PHONE_TERTIARY}?text=${encodedMessage}`;
+            const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMessage}`;
 
             // 2. Dual/Multi-Dispatch: Optimistic non-blocking CRM capture (keepalive: true)
             try {
@@ -1742,24 +1740,14 @@
                   message: `Counselling request for ${goal}`,
                   subject: 'FWG Landing Page Counselling',
                   source: 'fitnesswithgomzi',
-                  recipients: [
-                    '+91' + WHATSAPP_PHONE_PRIMARY,
-                    '+91' + WHATSAPP_PHONE_SECONDARY,
-                    '+91' + WHATSAPP_PHONE_TERTIARY
-                  ],
-                  assignedTo: [
-                    '+91' + WHATSAPP_PHONE_PRIMARY,
-                    '+91' + WHATSAPP_PHONE_SECONDARY,
-                    '+91' + WHATSAPP_PHONE_TERTIARY
-                  ],
+                  recipients: ['+' + WHATSAPP_PHONE],
+                  assignedTo: ['+' + WHATSAPP_PHONE],
                   details: {
                     goal,
                     landingPage: window.location.href,
                     submittedAt: new Date().toISOString(),
                     whatsappRecipients: [
-                      { desk: 'Primary Desk', number: '+91 88668 42520' },
-                      { desk: 'Secondary Desk', number: '+91 78743 31000' },
-                      { desk: 'Support Desk', number: '+91 96918 40096' }
+                      { desk: 'Primary Desk', number: WHATSAPP_DISPLAY }
                     ]
                   }
                 };
@@ -1778,7 +1766,7 @@
             }
 
             // 3. UI feedback
-            showStatus('Connecting to WhatsApp (+91 88668 42520)… Please tap "Send" in the chat.');
+            showStatus(`Connecting to WhatsApp (${WHATSAPP_DISPLAY})… Please tap "Send" in the chat.`);
 
             const btnText = form.querySelector('[data-counselling-btn-text]');
             const originalLabel = btnText ? btnText.textContent : 'Book counselling on WhatsApp';
@@ -1789,26 +1777,18 @@
               submitButton.textContent = 'Connecting WhatsApp…';
             }
 
-            // 4. Synchronous window dispatch: Attempt to trigger direct dispatch to all 3 numbers immediately
-            let primaryOpened = false;
+            // 4. Open the WhatsApp chat with the pre-filled inquiry
+            let opened = false;
             try {
-              const wa1 = window.open(primaryUrl, '_blank', 'noopener,noreferrer');
-              if (wa1 && !wa1.closed && typeof wa1.closed !== 'undefined') {
-                primaryOpened = true;
+              const wa = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+              if (wa && !wa.closed && typeof wa.closed !== 'undefined') {
+                opened = true;
               }
             } catch (_) { }
 
-            try {
-              window.open(secondaryUrl, '_blank', 'noopener,noreferrer');
-            } catch (_) { }
-
-            try {
-              window.open(tertiaryUrl, '_blank', 'noopener,noreferrer');
-            } catch (_) { }
-
             // Fallback for popup-blocker or mobile webview
-            if (!primaryOpened) {
-              window.location.href = primaryUrl;
+            if (!opened) {
+              window.location.href = whatsappUrl;
             }
 
             if (nameInput) nameInput.value = '';
@@ -2313,13 +2293,13 @@
             </h2>
             <p style="margin: 0; color: #3A3F37">Book a counselling call. We’ll tell you honestly which level to start
               at, online or offline in Surat.</p>
-            <a href="https://wa.me/918866842520" target="_blank" rel="noopener noreferrer"
+            <a href="https://wa.me/916354051487" target="_blank" rel="noopener noreferrer"
               style="align-self: flex-start; margin-top: 6px; color: #121411; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; min-height: 44px">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"></path>
               </svg>
-              Or WhatsApp +91 88668 42520
+              Or WhatsApp +91 63540 51487
             </a>
           </div>
 
@@ -2407,7 +2387,7 @@
             </button>
             <p data-counselling-status role="status" aria-live="polite" hidden
               style="margin: 0; font-size: 13px; font-weight: 600; text-align: center"></p>
-            <p class="apply-helper-text">Inquiry connects directly to WhatsApp (+91 88668 42520) · Keep photos ready</p>
+            <p class="apply-helper-text">Inquiry connects directly to WhatsApp (+91 63540 51487) · Keep photos ready</p>
           </form>
         </div>
       </section>
@@ -2448,7 +2428,7 @@
       <footer class="site-footer">
         <div class="footer-container">
           <div style="color: #121411; font-weight: 700; font-size: 13px">
-            Fitness With Gomzi, Surat, Gujarat · WhatsApp +91 88668 42520
+            Fitness With Gomzi, Surat, Gujarat · WhatsApp +91 63540 51487
           </div>
           <p style="margin: 0; max-width: 820px; line-height: 1.5">
             For general awareness only; not a substitute for consultation with a qualified medical professional. Any
