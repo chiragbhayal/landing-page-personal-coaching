@@ -1,43 +1,48 @@
-# Landing page – Fat loss → Muscle → Stage — design reference
+# Gomzi Transformation Program – Landing page
 
-This is a design mockup created in a visual design tool, exported as a
-standalone page. Treat it as a REFERENCE MOCKUP, not production code:
-the markup and inline styles carry the design's precise values — colors,
-font sizes, spacing, radii, shadows, layout — which an implementation
-should replicate faithfully in its own components and styling system
-rather than copy wholesale.
+Fat loss → Muscle → Stage landing page, built with [Vite](https://vite.dev/) (plain HTML, CSS and JavaScript, no framework).
 
-## Contents
+## Getting started
 
-- `Main.dc.html` — the artboard (a Design Component: an `<x-dc>`
-  template + a small logic class). The values to replicate live in its
-  inline `style="…"` attributes and the `<helmet><style>` block.
-- `support.js`, `vendor/react*.js` — the runtime that renders the
-  component in a browser; not part of the design.
-
-## Viewing
-
-Serve the folder (e.g. `python3 -m http.server`) and open `Main.dc.html`;
-some browsers block the scripts over file://.
-
-## Backend configuration
-
-Set the contact-inquiry API URL in `.env`:
-
-```env
-BACKEND_URL=http://localhost/public/v1/contact-inquiry
-```
-
-After changing `.env`, regenerate the browser runtime configuration:
+Requires Node.js 18+.
 
 ```bash
-node generate-env-config.js
+npm install
+cp .env.example .env   # then edit VITE_BACKEND_URL if needed
+npm run dev            # http://localhost:5173
 ```
 
-`Main.dc.html` reads the generated `env-config.js`; the browser never reads `.env` directly.
+| Command           | What it does                                  |
+| ----------------- | --------------------------------------------- |
+| `npm run dev`     | Start the dev server with hot reload          |
+| `npm run build`   | Production build into `dist/`                 |
+| `npm run preview` | Serve the production build locally            |
+
+## Project structure
+
+```
+index.html                  Page markup (Vite entry point)
+src/
+  main.js                   Loads styles and initialises all page scripts
+  config.js                 Backend URL + WhatsApp number
+  styles/main.css           All page styles
+  scripts/
+    mobile-nav.js           Mobile navigation drawer
+    goal-dropdown.js        "Your goal" dropdown in the form
+    counselling-form.js     Form validation, CRM capture, WhatsApp hand-off
+    prep-slider.js          Contest-prep image slider
+  assets/images/            Images (hashed and optimised by Vite on build)
+```
+
+## Configuration
+
+- **WhatsApp number**: change `WHATSAPP_PHONE` / `WHATSAPP_DISPLAY` in `src/config.js`. The number is
+  also written as text in `index.html` (search for `wa.me` and `WhatsApp +91`).
+- **Brand accent colour**: `--gomzi-accent` at the top of `src/styles/main.css`.
+- **Backend (CRM) URL**: `VITE_BACKEND_URL` in `.env`. It is baked in at build time, so restart
+  `npm run dev` / rebuild after changing it. If it is empty, form inquiries go to WhatsApp only.
 
 ## Vercel deployment
 
-The root URL is rewritten to `Main.dc.html` through `vercel.json`. Keep the Vercel
-Framework Preset set to **Other** and leave the Output Directory empty so Vercel
-serves the repository root.
+`vercel.json` sets the Vite preset (build: `npm run build`, output: `dist`). Add
+`VITE_BACKEND_URL` under **Project → Settings → Environment Variables** in Vercel.

@@ -1,0 +1,15 @@
+{
+  "name": "landing-page-personal-coaching",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gomzi Transformation Program landing page",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.3.8"
+  }
+}
